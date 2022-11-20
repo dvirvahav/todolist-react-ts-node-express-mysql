@@ -1,5 +1,5 @@
 {
-  "name": "todolist-react-ts-node",
+  "name": "todolist-react-ts-node-express-mysql",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",

@@ -9,6 +9,8 @@ import { useGlobalCurrentListIDContext } from "../../context/currentListID";
 import Axios from "axios";
 import { useGlobalUserContext } from "../../context/user";
 
+/* This function contains all the lists and save & fetch data from and to mysql DB*/
+
 export default function ListContainer() {
   const [input, setInput] = useState<string>("");
   const { setCurrentList } = useGlobalCurrentTasksContext();
@@ -16,11 +18,12 @@ export default function ListContainer() {
   const { setCurrentListID } = useGlobalCurrentListIDContext();
   const { profile } = useGlobalUserContext();
 
+  /*This function add new list to user's lists */
   const handleSubmit = (event: FormEvent): void => {
-    let newList: listObject = {} as listObject;
     event.preventDefault(); // prevent page from re-render
-    console.log(profile);
-    // make a connection to DB and save the new list with axios
+    let newList: listObject = {} as listObject;
+
+    // make a connection to DB and save the new list
     Axios.post("/api/insertList", {
       listName: input,
       username: profile.username,
@@ -32,14 +35,13 @@ export default function ListContainer() {
         newList = initiateNewList(response.data[0]["id"], input); // set new list with the id
         setCurrentList(newList.pendingTasks.slice()); // set the list as current
         addNewList(newList); // add the list to items
-
-        // setNewSerial(serial + 1); //
       }
     });
     console.log(lists);
-    setInput("");
+    setInput(""); // clear add list field
   };
 
+  // handle input change
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
   };
@@ -74,7 +76,7 @@ export default function ListContainer() {
   );
 }
 
-//
+// This function help to create new list
 export function initiateNewList(serial: number, input: string): listObject {
   let completed: taskObject[] = [];
   let pending: taskObject[] = [];

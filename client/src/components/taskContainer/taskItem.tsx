@@ -21,7 +21,7 @@ export default function TaskItem({
   const [buttonInput, setButtonInput] = useState<string>("Edit");
   const [readOnly, setReadOnly] = useState<boolean>(true); // change state to readonly and vise versa
 
-  // remove list from items
+  // remove list from items & data base
   const handleRemove = () => {
     // save change in database
     Axios.post("/api/removeTask", {
@@ -37,13 +37,6 @@ export default function TaskItem({
               .slice();
           }
           return item;
-        });
-
-        // eslint-disable-next-line array-callback-return
-        lists.map((item) => {
-          if (item.listID === currentListID) {
-            setCurrentList(item.pendingTasks.slice());
-          }
         });
       }
     });
@@ -64,7 +57,7 @@ export default function TaskItem({
       newName: input,
     }).then((response) => {
       if (response.data === "Error") {
-        alert("Something went wrong, task not saved in db");
+        alert("Something went wrong, task name not updated in db");
       } else {
         lists.map((item) => {
           if (item.listID === currentListID) {
@@ -76,7 +69,6 @@ export default function TaskItem({
           return item;
         });
 
-        // eslint-disable-next-line array-callback-return
         lists.map((item) => {
           if (item.listID === currentListID) {
             setCurrentList(item.pendingTasks.slice());

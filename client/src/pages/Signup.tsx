@@ -95,7 +95,7 @@ export default function Signup() {
 
           <br />
           <br />
-          <input type="submit" value="Register" />
+          <input type="submit" className="Login-button" value="Register" />
 
           <br />
           <br />

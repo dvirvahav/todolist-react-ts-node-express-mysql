@@ -7,7 +7,6 @@ import { useGlobalListContext } from "../../context/list";
 export default function ListItem({
   itemInput,
   itemID,
-  isActive,
 }: {
   itemInput: string;
   itemID: number;
@@ -20,35 +19,26 @@ export default function ListItem({
   const [readOnly, setReadOnly] = useState<boolean>(true);
   const [input, setInput] = useState<string>(itemInput);
 
-  // set clicked list tasks
+  // This function handle clicked list
   const handleClick = () => {
-    setCurrentListID(itemID);
+    setCurrentListID(itemID); // set current list ID
 
-    // eslint-disable-next-line array-callback-return
+    // Displaying current list tasks to tasks tab
     lists.map((item) => {
       if (item.listID === itemID) {
         setCurrentList(item.pendingTasks.slice());
       }
     });
-
-    // effect is not instant for some reason.
-    //  lists.map((item) => {
-    //       if (item.listID === currentListID) {
-    //         item.isActive = true;
-    //       } else {
-    //         item.isActive = false;
-    //       }
-    //       return item;
-    //     });
   };
 
+  // handle task input change
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
   // remove list from items
   const handleRemove = () => {
-    // save change in database
+    // Make a connection to DB and remove the list + its tasks
     Axios.post("/api/removeList", {
       listID: itemID,
     }).then((response) => {
@@ -61,6 +51,7 @@ export default function ListItem({
     });
   };
 
+  // Make a connection to DB and update list name
   const handleSave = () => {
     setReadOnly(!readOnly);
     if (!readOnly) {

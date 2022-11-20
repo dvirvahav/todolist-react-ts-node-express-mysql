@@ -16,7 +16,7 @@ export default function TaskContainer() {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
   };
-
+  // make a connection to DB and save the new task to already exist list
   const submit = (event: FormEvent): void => {
     event.preventDefault(); // prevent page from re-render
 
@@ -30,6 +30,7 @@ export default function TaskContainer() {
         // mysql auto-generate id, date created
         let newTask: taskObject = {} as taskObject;
 
+        // Creating new task to present in client side
         lists.map((item) => {
           if (item.listID === currentListID) {
             newTask = initiateNewTask(response.data[0]["id"], input);
@@ -40,7 +41,7 @@ export default function TaskContainer() {
           }
         });
 
-        // eslint-disable-next-line array-callback-return
+        // Set the list as current list
         lists.map((item) => {
           if (item.listID === currentListID) {
             setCurrentList(item.pendingTasks.slice());
@@ -52,7 +53,6 @@ export default function TaskContainer() {
     setInput("");
   };
 
-  //<TasksStatusContainer />
   return (
     <div className="taskContainer">
       <h1 className="headline">Tasks</h1>

@@ -6,6 +6,8 @@ const cors = require("cors");
 var bodyParser = require("body-parser");
 const port = 5000;
 const mysql = require("mysql");
+
+// Connection details
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",

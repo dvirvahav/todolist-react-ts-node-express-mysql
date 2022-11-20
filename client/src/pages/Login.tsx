@@ -12,7 +12,7 @@ export default function Login() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const { setUser } = useGlobalUserContext();
-  const { lists, reloadNewList, clearList } = useGlobalListContext();
+  const { reloadNewList, clearList } = useGlobalListContext();
   const { clearCurrentList } = useGlobalCurrentTasksContext();
   const navigate = useNavigate();
 
@@ -23,6 +23,9 @@ export default function Login() {
     setPassword(e.target.value);
   };
 
+  /* This login verify login details with mysql DB and after confirm 
+  it sends the user information + lists &tasks related to that user */
+
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     Axios.post("/api/login", {
@@ -32,39 +35,47 @@ export default function Login() {
       if (response.data === "Error") {
         alert("Login details are incorrect");
       } else {
-        const user: userObject = {} as userObject;
-        user.username = response.data[0]["username"];
-        user.first = response.data[0]["first"];
-        user.last = response.data[0]["last"];
-        user.mail = response.data[0]["mail"];
+        updateUserDetails(response);
+
+        // Fetch users lists + tasks
         Axios.post("/api/getAllData", { username: username }).then(
           (response) => {
             if (response.data === "Error") {
               alert("Couldn't fetch data from DB");
             } else {
-              clearData();
+              clearData(); // in case user connected with another login details.
               loadData(response);
-              console.log(lists);
             }
           }
         );
 
-        setUser(user);
         navigate("/");
       }
     });
   };
 
+  // Navigate to signup page
   const handleSignup = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     navigate("/signup");
   };
+
   const clearData = () => {
     clearCurrentList();
     clearList();
   };
+
+  const updateUserDetails = (response: any) => {
+    const user: userObject = {} as userObject;
+    user.username = response.data[0]["username"];
+    user.first = response.data[0]["first"];
+    user.last = response.data[0]["last"];
+    user.mail = response.data[0]["mail"];
+    setUser(user);
+  };
+
   const loadData = (response: any) => {
-    const listss: listObject[] = [];
+    const userLists: listObject[] = [];
     var i,
       j = 0;
     for (i = 0; i < response.data[0].length; i++) {
@@ -73,7 +84,7 @@ export default function Login() {
         currentListID,
         response.data[0][i]["name"]
       );
-      listss.push(newList);
+      userLists.push(newList);
       for (j = 0; j < response.data[1].length; j++) {
         if (response.data[1][j]["listID"] === currentListID) {
           let newTask = initiateNewTask(
@@ -82,13 +93,14 @@ export default function Login() {
           );
           newTask.info.date = response.data[1][j]["date"];
           if (response.data[1][j]["status"])
-            listss[i].completedTasks.push(newTask);
-          listss[i].pendingTasks.push(newTask);
+            userLists[i].completedTasks.push(newTask);
+          userLists[i].pendingTasks.push(newTask);
         }
       }
     }
-    reloadNewList(listss);
+    reloadNewList(userLists);
   };
+
   return (
     <div className="Login-body">
       <div className="Login">
