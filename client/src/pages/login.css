@@ -1,0 +1,42 @@
+.Login-body {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+.Login {
+  background-color: white;
+  height: 400px;
+  width: 300px;
+  border: 25px;
+  padding: 20px;
+  margin: 8rem auto;
+  border-radius: 30px;
+}
+
+.Login-button {
+  display: inline-block;
+  outline: 0;
+  border: none;
+  cursor: pointer;
+  padding: 0 20px;
+  border-radius: 50px;
+  min-width: 200px;
+  height: 50px;
+  font-size: 18px;
+  background-color: #6a7dff;
+  font-weight: 500;
+  color: rgb(255, 255, 255);
+}
+
+.Login input {
+  width: 300px;
+  height: 30px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: rgba(147, 142, 142, 0.685) 0.2px solid;
+}
+
+.Login h1 {
+  color: #6a7dff;
+  letter-spacing: -2px;
+}

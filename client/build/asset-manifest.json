@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.da43486c.css",
+    "main.js": "/static/js/main.8184f321.js",
+    "static/media/axios.cjs": "/static/media/axios.862815d8cfee7fa80dee.cjs",
+    "index.html": "/index.html",
+    "main.da43486c.css.map": "/static/css/main.da43486c.css.map",
+    "main.8184f321.js.map": "/static/js/main.8184f321.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.da43486c.css",
+    "static/js/main.8184f321.js"
+  ]
+}
