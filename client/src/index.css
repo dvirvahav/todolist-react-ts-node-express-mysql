@@ -1,0 +1,117 @@
+@import url("./components/infoContainer/infoContainer.css");
+@import url("./components/taskContainer/taskContainer.css");
+@import url("./components/listContainer/listContainer.css");
+@import url("./pages/login.css");
+* {
+  font-family: "Courier New", Courier, monospace;
+  letter-spacing: -1px;
+  margin: 0;
+  border-radius: 10px;
+  color: #3ba4eb;
+}
+
+nav {
+  text-align: center;
+}
+body {
+  margin: 5%;
+  background-repeat: no-repeat;
+  background-color: #8cc9f2f0;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+h1 {
+  text-align: center;
+  margin: 5px;
+}
+
+.tasksByStatus /* Child */ {
+  /*Set grid*/
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100px;
+  text-align: center;
+  padding: 0;
+}
+.headline {
+  text-align: center;
+  padding: 0;
+  height: 50px;
+  background-color: var(--color-bg-secondary);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(162, 159, 159, 0.15);
+}
+
+.categoryList,
+.taskInfo {
+  list-style: none;
+  height: 600px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 0;
+}
+
+.item /* task properties */ {
+  cursor: pointer;
+  height: 35px;
+  margin: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  background-color: var(--color-bg-secondary);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(203, 203, 212, 0.15);
+}
+
+.item:hover/* task & list hover properties */ {
+  box-shadow: 0 5px 15px rgba(231, 204, 205, 0.4);
+  transform: scale(1.03);
+}
+
+input {
+  border: none;
+  background: none;
+  padding: 5px;
+  cursor: inherit;
+}
+
+input:focus {
+  outline: none;
+  caret-color: transparent;
+}
+
+.buttonsGrid {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 2px;
+}
+
+/* Case task was selected */
+.active {
+  box-shadow: 0 5px 15px rgba(231, 204, 205, 0.4);
+  transform: scale(1.03);
+}
+
+.formAdd {
+  height: 30px;
+}
