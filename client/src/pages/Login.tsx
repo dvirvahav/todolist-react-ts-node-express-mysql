@@ -31,27 +31,33 @@ export default function Login() {
     Axios.post("/api/login", {
       username: username,
       password: password,
-    }).then((response) => {
-      if (response.data === "Error") {
-        alert("Login details are incorrect");
-      } else {
-        updateUserDetails(response);
+    })
+      .then((response) => {
+        if (response.data === "Error") {
+          alert("Login details are incorrect");
+        } else {
+          updateUserDetails(response);
 
-        // Fetch users lists + tasks
-        Axios.post("/api/getAllData", { username: username }).then(
-          (response) => {
-            if (response.data === "Error") {
-              alert("Couldn't fetch data from DB");
-            } else {
-              clearData(); // in case user connected with another login details.
-              loadData(response);
-            }
-          }
-        );
+          // Fetch users lists + tasks
+          Axios.post("/api/getAllData", { username: username })
+            .then((response) => {
+              if (response.data === "Error") {
+                alert("Couldn't fetch data from DB");
+              } else {
+                clearData(); // in case user connected with another login details.
+                loadData(response);
+              }
+            })
+            .catch(() => {
+              alert("Couldn't get a response from server");
+            });
 
-        navigate("/");
-      }
-    });
+          navigate("/");
+        }
+      })
+      .catch(() => {
+        alert("Couldn't get a response from server");
+      });
   };
 
   // Navigate to signup page

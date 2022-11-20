@@ -37,7 +37,7 @@ export default function ListContainer() {
         addNewList(newList); // add the list to items
       }
     });
-    console.log(lists);
+
     setInput(""); // clear add list field
   };
 

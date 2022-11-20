@@ -35,11 +35,15 @@ export default function Signup() {
       firstName: firstName,
       lastName: lastName,
       password: password,
-    }).then((response) => {
-      if (response.data !== "Error") {
-        navigate("/login");
-      }
-    });
+    })
+      .then((response) => {
+        if (response.data !== "Error") {
+          navigate("/login");
+        }
+      })
+      .catch(() => {
+        alert("Couldn't get a response from server");
+      });
   };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {

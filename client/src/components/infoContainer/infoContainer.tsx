@@ -1,6 +1,7 @@
 import { useGlobalCurrentTaskContext } from "../../context/currentTask";
 import DateItem from "./dateItem";
 
+/* This function contains the current task selected information */
 export default function InfoContainer() {
   const { currentTask } = useGlobalCurrentTaskContext();
 

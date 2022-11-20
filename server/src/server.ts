@@ -31,10 +31,11 @@ app.post(
         console.log(err);
       } else {
         db.query(
-          `Select lists.id as "listID",tasks.id as "taskID",tasks.name as "taskName", tasks.status, tasks.date from lists,tasks where username=? and lists.id=tasks.list_id order by listID
-        `,
+          `Select lists.id as "listID",tasks.id as "taskID",tasks.name as "taskName", tasks.status,  DATE_FORMAT(tasks.date, '%m/%d/%Y, %r') as date from lists,tasks where username=? and lists.id=tasks.list_id order by listID
+          `,
           [username],
           (err: any, result2: any) => {
+            console.log(result2);
             response.send([result1, result2]);
           }
         );
