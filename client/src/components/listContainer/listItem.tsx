@@ -84,7 +84,8 @@ export default function ListItem({
         maxLength={20}
         onChange={handleChange}
       />
-      <div className="buttonsGrid">
+
+      <div className="buttonsGrid ">
         <button onClick={handleSave}>{buttonInput}</button>
         <button onClick={handleRemove}>Remove</button>
       </div>

@@ -1,12 +1,13 @@
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
-import { useGlobalUserContext } from "../context/user";
-import { listObject, userObject } from "../types/types";
-import { initiateNewList } from "../components/listContainer/listContainer";
-import { initiateNewTask } from "../components/taskContainer/taskContainer";
-import { useGlobalListContext } from "../context/list";
-import { useGlobalCurrentTasksContext } from "../context/currentTasks";
+import { useGlobalUserContext } from "../../context/user";
+import { listObject, userObject } from "../../types/types";
+import { initiateNewList } from "../../components/listContainer/listContainer";
+import { initiateNewTask } from "../../components/taskContainer/taskContainer";
+import { useGlobalListContext } from "../../context/list";
+import { useGlobalCurrentTasksContext } from "../../context/currentTasks";
+import { alerts } from "../../utils/enums";
 
 export default function Login() {
   const [username, setUsername] = useState<string>("");
@@ -34,7 +35,7 @@ export default function Login() {
     })
       .then((response) => {
         if (response.data === "Error") {
-          alert("Login details are incorrect");
+          alert(alerts.login);
         } else {
           updateUserDetails(response);
 
@@ -42,21 +43,21 @@ export default function Login() {
           Axios.post("/api/getAllData", { username: username })
             .then((response) => {
               if (response.data === "Error") {
-                alert("Couldn't fetch data from DB");
+                alert(alerts.db);
               } else {
                 clearData(); // in case user connected with another login details.
                 loadData(response);
               }
             })
             .catch(() => {
-              alert("Couldn't get a response from server");
+              alert(alerts.connection);
             });
 
           navigate("/");
         }
       })
       .catch(() => {
-        alert("Couldn't get a response from server");
+        alert(alerts.connection);
       });
   };
 
@@ -100,7 +101,7 @@ export default function Login() {
           newTask.info.date = response.data[1][j]["date"];
           if (response.data[1][j]["status"])
             userLists[i].completedTasks.push(newTask);
-          userLists[i].pendingTasks.push(newTask);
+          else userLists[i].pendingTasks.push(newTask);
         }
       }
     }

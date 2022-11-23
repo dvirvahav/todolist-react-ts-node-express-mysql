@@ -7,6 +7,7 @@ export const taskTemp: taskObject = {
   info: {
     date: "",
   },
+  status: 0,
 };
 export const CurrentTaskContext = createContext<currentTask>({
   currentTask: taskTemp,

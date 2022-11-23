@@ -1,16 +1,16 @@
 import { useCallback, useState } from "react";
 
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import { listObject, taskObject, userObject } from "../types/types";
-import { CurrentTasksContext } from "../context/currentTasks";
-import { CurrentListIDContext } from "../context/currentListID";
-import { CurrentTaskContext, taskTemp } from "../context/currentTask";
-import { UserContext } from "../context/user";
+import { listObject, taskObject, userObject } from "../../types/types";
+import { CurrentTasksContext } from "../../context/currentTasks";
+import { CurrentListIDContext } from "../../context/currentListID";
+import { CurrentTaskContext, taskTemp } from "../../context/currentTask";
+import { UserContext } from "../../context/user";
 import React from "react";
-import Login from "./Login";
-import Signup from "./Signup";
-import Home from "./Home";
-import { ListContext } from "../context/list";
+import Login from "../login/Login";
+import Signup from "../signup/Signup";
+import Home from "../home/Home";
+import { ListContext } from "../../context/list";
 
 function App() {
   const [lists, setLists] = useState<listObject[]>([]);

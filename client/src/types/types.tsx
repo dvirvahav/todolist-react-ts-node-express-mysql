@@ -28,6 +28,7 @@ export type taskObject = {
   taskID: number;
   taskName: string;
   info: infoObject;
+  status: number;
 };
 export type currentListID = {
   currentListID: number;

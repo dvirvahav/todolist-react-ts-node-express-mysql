@@ -3,10 +3,12 @@
     grid-template-columns: 1fr 2fr 1fr;
   }
 }
+
 .Home {
   background-color: none;
   display: grid;
   padding: 20px;
+
   /*Inline + enlarge middle container */
 
   height: 70%;

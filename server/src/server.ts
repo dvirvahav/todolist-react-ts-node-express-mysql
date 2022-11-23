@@ -18,6 +18,30 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// this update task status
+app.post(
+  "/api/updateTaskStatus",
+  (request: Express.Request, response: Express.Response) => {
+    const taskID: string = request.body.taskID;
+    const itemStatus: string = request.body.itemStatus;
+
+    const sqlDeleteTask = `UPDATE tasks
+    SET 
+        status = ?
+    WHERE
+        id = ?;`;
+
+    db.query(sqlDeleteTask, [itemStatus, taskID], (err: any, result: any) => {
+      if (err) {
+        response.send("Error");
+        console.log(err);
+      } else {
+        response.send("OK");
+      }
+    });
+  }
+);
+
 // this sends all data from DB
 app.post(
   "/api/getAllData",

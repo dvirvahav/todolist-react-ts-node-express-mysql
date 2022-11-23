@@ -8,7 +8,8 @@ import { infoObject, taskObject } from "../../types/types";
 import TaskItem from "./taskItem";
 
 export default function TaskContainer() {
-  const { currentList, setCurrentList } = useGlobalCurrentTasksContext();
+  const { currentList, setCurrentList, clearCurrentList } =
+    useGlobalCurrentTasksContext();
   const { currentListID } = useGlobalCurrentListIDContext();
   const { lists } = useGlobalListContext();
   const [input, setInput] = useState<string>("");
@@ -53,14 +54,25 @@ export default function TaskContainer() {
     setInput("");
   };
 
+  const handlePending = () => {
+    // clearCurrentList();
+  };
+  const handleCompleted = () => {};
   return (
     <div className="taskContainer">
       <h1 className="headline">Tasks</h1>
-
+      <div>
+        <button onClick={handlePending}> Pending</button>
+        <button onClick={handleCompleted}> Completed </button>
+      </div>
       <div className="allLists">
         <ul className="pendingTaskList">
           {currentList.map((item) => (
-            <TaskItem itemInput={item.taskName} itemID={item.taskID} />
+            <TaskItem
+              itemInput={item.taskName}
+              itemID={item.taskID}
+              itemStatus={item.status}
+            />
           ))}
         </ul>
       </div>
@@ -89,6 +101,7 @@ export function initiateNewTask(serial: number, input: string): taskObject {
     taskID: serial,
     taskName: input,
     info: newInfoForTask,
+    status: 0,
   };
 
   return newTaskItem;

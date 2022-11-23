@@ -8,9 +8,11 @@ import { useGlobalListContext } from "../../context/list";
 export default function TaskItem({
   itemInput,
   itemID,
+  itemStatus,
 }: {
   itemInput: string;
   itemID: number;
+  itemStatus: number;
 }) {
   const { currentListID } = useGlobalCurrentListIDContext();
   const { lists } = useGlobalListContext();
@@ -35,6 +37,7 @@ export default function TaskItem({
             item.pendingTasks = item.pendingTasks
               .filter((item) => item.taskID !== itemID)
               .slice();
+            setCurrentList(item.pendingTasks);
           }
           return item;
         });
@@ -59,20 +62,19 @@ export default function TaskItem({
       if (response.data === "Error") {
         alert("Something went wrong, task name not updated in db");
       } else {
+        if (itemStatus) {
+        } else {
+        }
         lists.map((item) => {
           if (item.listID === currentListID) {
             item.pendingTasks.map((item) => {
-              if (item.taskID === itemID) item.taskName = input;
+              if (item.taskID === itemID) {
+                item.taskName = input;
+              }
               return item;
             });
           }
           return item;
-        });
-
-        lists.map((item) => {
-          if (item.listID === currentListID) {
-            setCurrentList(item.pendingTasks.slice());
-          }
         });
       }
     });
@@ -81,17 +83,56 @@ export default function TaskItem({
   const handleClick = () => {
     lists.map((item) => {
       if (item.listID === currentListID) {
-        item.pendingTasks.map((item) => {
-          if (item.taskID === itemID) setCurrentTask(item);
-          return item;
-        });
+        if (itemStatus) {
+          item.completedTasks.map((item) => {
+            if (item.taskID === itemID) setCurrentTask(item);
+            return item;
+          });
+        } else {
+          item.pendingTasks.map((item) => {
+            if (item.taskID === itemID) setCurrentTask(item);
+            return item;
+          });
+        }
       }
       return item;
     });
   };
+  const handleCheck = () => {
+    // Axios.post("/api/updateTaskStatus", {
+    //   taskID: itemID,
+    //   itemStatus: itemStatus ? 0 : 1,
+    // }).then((response) => {
+    //   if (response.data === "Error") {
+    //     alert("Something went wrong, task not updated");
+    //   } else {
+    //     lists.map((item) => {
+    //       if (item.listID === currentListID) {
+    //         if (itemStatus) {
+    //           item.completedTasks.map((item) => {
+    //             if (item.taskID === itemID) {
+    //               item.status = 0;
+    //             }
+    //             return item;
+    //           });
+    //         } else {
+    //           item.pendingTasks.map((item) => {
+    //             if (item.taskID === itemID) {
+    //               item.status = 1;
+    //             }
+    //             return item;
+    //           });
+    //         }
+    //       }
+    //       return item;
+    //     });
+    //   }
+    // });
+  };
 
   return (
     <li className="taskItem item" id={"task" + itemID} onClick={handleClick}>
+      <input type="checkbox" onChange={handleCheck} />
       <input
         type="text"
         value={itemInput}
