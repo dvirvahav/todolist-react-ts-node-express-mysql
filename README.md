@@ -9,5 +9,3 @@ Foreign key connected between the tables.
 ## MYSQL tables script can be found [here](https://github.com/dvirvahav/todolist-react-ts-node-express-mysql/blob/main/db-intialize.sql)
 
 
-
-```
