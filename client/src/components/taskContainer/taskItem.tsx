@@ -2,7 +2,7 @@ import Axios from "axios";
 import { ChangeEvent, useState } from "react";
 import { useGlobalCurrentListIDContext } from "../../context/currentListID";
 import { useGlobalCurrentTaskContext } from "../../context/currentTask";
-import { useGlobalCurrentTasksContext } from "../../context/currentTasks";
+import { useGlobalCurrentListContext } from "../../context/currentList";
 import { useGlobalListContext } from "../../context/list";
 
 export default function TaskItem({
@@ -16,14 +16,14 @@ export default function TaskItem({
 }) {
   const { currentListID } = useGlobalCurrentListIDContext();
   const { lists } = useGlobalListContext();
-  const { setCurrentList } = useGlobalCurrentTasksContext();
+  const { setCurrentList, clearCurrentList } = useGlobalCurrentListContext();
   const { setCurrentTask } = useGlobalCurrentTaskContext();
 
   const [input, setInput] = useState<string>(itemInput);
   const [buttonInput, setButtonInput] = useState<string>("Edit");
   const [readOnly, setReadOnly] = useState<boolean>(true); // change state to readonly and vise versa
 
-  // remove list from items & data base
+  // remove task from items & data base
   const handleRemove = () => {
     // save change in database
     Axios.post("/api/removeTask", {
@@ -34,9 +34,8 @@ export default function TaskItem({
       } else {
         lists.map((item) => {
           if (item.listID === currentListID) {
-            item.pendingTasks = item.pendingTasks
-              .filter((item) => item.taskID !== itemID)
-              .slice();
+            item.pendingTasks.delete(itemID);
+            clearCurrentList();
             setCurrentList(item.pendingTasks);
           }
           return item;
@@ -50,10 +49,10 @@ export default function TaskItem({
 
   const handleSave = () => {
     setReadOnly(!readOnly);
-    if (!readOnly) {
-      setButtonInput("Edit");
+    if (readOnly) {
+      setButtonInput("Save");
       return;
-    } else setButtonInput("Save");
+    } else setButtonInput("Edit");
 
     Axios.post("/api/updateTask", {
       taskID: itemID,
@@ -62,19 +61,13 @@ export default function TaskItem({
       if (response.data === "Error") {
         alert("Something went wrong, task name not updated in db");
       } else {
-        if (itemStatus) {
-        } else {
-        }
         lists.map((item) => {
           if (item.listID === currentListID) {
-            item.pendingTasks.map((item) => {
-              if (item.taskID === itemID) {
-                item.taskName = input;
-              }
-              return item;
-            });
+            let ref = item.pendingTasks.get(itemID);
+            if (ref === undefined) {
+            } else ref.taskName = input;
+            setCurrentList(item.pendingTasks);
           }
-          return item;
         });
       }
     });
@@ -84,18 +77,15 @@ export default function TaskItem({
     lists.map((item) => {
       if (item.listID === currentListID) {
         if (itemStatus) {
-          item.completedTasks.map((item) => {
+          Array.from(item.completedTasks.values()).map((item) => {
             if (item.taskID === itemID) setCurrentTask(item);
-            return item;
           });
         } else {
-          item.pendingTasks.map((item) => {
+          Array.from(item.pendingTasks.values()).map((item) => {
             if (item.taskID === itemID) setCurrentTask(item);
-            return item;
           });
         }
       }
-      return item;
     });
   };
   const handleCheck = () => {
@@ -135,7 +125,7 @@ export default function TaskItem({
       <input type="checkbox" onChange={handleCheck} />
       <input
         type="text"
-        value={itemInput}
+        value={input}
         readOnly={readOnly}
         maxLength={20}
         onChange={handleChange}

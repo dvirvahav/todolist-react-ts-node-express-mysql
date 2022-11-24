@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import { currentTask, taskObject } from "../types/types";
 
 export const taskTemp: taskObject = {
@@ -15,3 +15,17 @@ export const CurrentTaskContext = createContext<currentTask>({
 });
 
 export const useGlobalCurrentTaskContext = () => useContext(CurrentTaskContext);
+
+export default function CurrentTaskContextProvider({
+  children,
+}: {
+  children: any;
+}) {
+  const [currentTask, setCurrentTask] = useState<taskObject>(taskTemp);
+
+  return (
+    <CurrentTaskContext.Provider value={{ currentTask, setCurrentTask }}>
+      {children}
+    </CurrentTaskContext.Provider>
+  );
+}

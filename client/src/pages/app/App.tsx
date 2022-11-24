@@ -1,39 +1,15 @@
-import { useCallback, useState } from "react";
-
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import { listObject, taskObject, userObject } from "../../types/types";
-import { CurrentTasksContext } from "../../context/currentTasks";
-import { CurrentListIDContext } from "../../context/currentListID";
-import { CurrentTaskContext, taskTemp } from "../../context/currentTask";
-import { UserContext } from "../../context/user";
 import React from "react";
 import Login from "../login/Login";
 import Signup from "../signup/Signup";
 import Home from "../home/Home";
-import { ListContext } from "../../context/list";
+import CurrentTaskContextProvider from "../../context/currentTask";
+import ListContextProvider from "../../context/list";
+import CurrentListContextProvider from "../../context/currentList";
+import CurrentListIDContextProvider from "../../context/currentListID";
+import UserContextProvider from "../../context/user";
 
 function App() {
-  const [lists, setLists] = useState<listObject[]>([]);
-  const [currentList, setCurrentList] = useState<taskObject[]>([]);
-  const [currentListID, setCurrentListID] = useState<number>(0);
-  const [currentTask, setCurrentTask] = useState<taskObject>(taskTemp);
-  const [profile, setUser] = useState({} as userObject);
-
-  const addNewList = useCallback(
-    (newList: listObject) => setLists([...lists, newList]),
-    [lists]
-  );
-  const reloadNewList = useCallback(
-    (newList: listObject[]) => setLists(newList),
-    []
-  );
-  const clearList = useCallback(() => setLists([]), []);
-  const clearCurrentList = useCallback(() => setCurrentList([]), []);
-  const removeItem = useCallback(
-    (itemID: number) => setLists(lists.filter((t) => t.listID !== itemID)),
-    [lists]
-  );
-
   return (
     <BrowserRouter>
       <div className="App">
@@ -48,31 +24,22 @@ function App() {
             <input type="text" className="nav-bar-item" value="Register" />
           </Link>
         </nav>
-        <CurrentTasksContext.Provider
-          value={{ currentList, clearCurrentList, setCurrentList }}>
-          <CurrentListIDContext.Provider
-            value={{ currentListID, setCurrentListID }}>
-            <CurrentTaskContext.Provider
-              value={{ currentTask, setCurrentTask }}>
-              <UserContext.Provider value={{ profile, setUser }}>
-                <ListContext.Provider
-                  value={{
-                    addNewList,
-                    removeItem,
-                    reloadNewList,
-                    clearList,
-                    lists,
-                  }}>
+
+        <CurrentListContextProvider>
+          <CurrentListIDContextProvider>
+            <CurrentTaskContextProvider>
+              <UserContextProvider>
+                <ListContextProvider>
                   <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/" element={<Home />} />
                     <Route path="/signup" element={<Signup />} />
                   </Routes>
-                </ListContext.Provider>
-              </UserContext.Provider>
-            </CurrentTaskContext.Provider>
-          </CurrentListIDContext.Provider>
-        </CurrentTasksContext.Provider>
+                </ListContextProvider>
+              </UserContextProvider>
+            </CurrentTaskContextProvider>
+          </CurrentListIDContextProvider>
+        </CurrentListContextProvider>
       </div>
     </BrowserRouter>
   );

@@ -1,7 +1,8 @@
 import Axios from "axios";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useGlobalCurrentListContext } from "../../context/currentList";
 import { useGlobalCurrentListIDContext } from "../../context/currentListID";
-import { useGlobalCurrentTasksContext } from "../../context/currentTasks";
+
 import { useGlobalListContext } from "../../context/list";
 
 export default function ListItem({
@@ -12,7 +13,7 @@ export default function ListItem({
   itemID: number;
   isActive: boolean;
 }) {
-  const { setCurrentList, clearCurrentList } = useGlobalCurrentTasksContext();
+  const { setCurrentList, clearCurrentList } = useGlobalCurrentListContext();
   const { lists, removeItem } = useGlobalListContext();
   const { currentListID, setCurrentListID } = useGlobalCurrentListIDContext();
   const [buttonInput, setButtonInput] = useState<string>("Edit");
@@ -20,13 +21,16 @@ export default function ListItem({
   const [input, setInput] = useState<string>(itemInput);
 
   // This function handle clicked list
-  const handleClick = () => {
+  const handleClearList = () => {
+    clearCurrentList();
+  };
+  const handleSetList = () => {
     setCurrentListID(itemID); // set current list ID
 
     // Displaying current list tasks to tasks tab
     lists.map((item) => {
       if (item.listID === itemID) {
-        setCurrentList(item.pendingTasks.slice());
+        setCurrentList(item.pendingTasks);
       }
     });
   };
@@ -76,7 +80,11 @@ export default function ListItem({
   };
 
   return (
-    <li className="item" id={"list" + itemID} onClick={handleClick}>
+    <li
+      className="item"
+      id={"list" + itemID}
+      onMouseDown={handleClearList}
+      onMouseUp={handleSetList}>
       <input
         type="text"
         value={input}

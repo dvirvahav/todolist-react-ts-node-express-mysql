@@ -2,14 +2,14 @@ import Axios from "axios";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 import { useGlobalCurrentListIDContext } from "../../context/currentListID";
-import { useGlobalCurrentTasksContext } from "../../context/currentTasks";
+import { useGlobalCurrentListContext } from "../../context/currentList";
 import { useGlobalListContext } from "../../context/list";
 import { infoObject, taskObject } from "../../types/types";
 import TaskItem from "./taskItem";
 
 export default function TaskContainer() {
   const { currentList, setCurrentList, clearCurrentList } =
-    useGlobalCurrentTasksContext();
+    useGlobalCurrentListContext();
   const { currentListID } = useGlobalCurrentListIDContext();
   const { lists } = useGlobalListContext();
   const [input, setInput] = useState<string>("");
@@ -35,17 +35,15 @@ export default function TaskContainer() {
         lists.map((item) => {
           if (item.listID === currentListID) {
             newTask = initiateNewTask(response.data[0]["id"], input);
-            item.pendingTasks.push(newTask);
-            return item;
-          } else {
-            return item;
+            item.pendingTasks.set(response.data[0]["id"], newTask);
           }
         });
 
         // Set the list as current list
         lists.map((item) => {
           if (item.listID === currentListID) {
-            setCurrentList(item.pendingTasks.slice());
+            clearCurrentList();
+            setCurrentList(item.pendingTasks);
           }
         });
       }
@@ -67,7 +65,7 @@ export default function TaskContainer() {
       </div>
       <div className="allLists">
         <ul className="pendingTaskList">
-          {currentList.map((item) => (
+          {Array.from(currentList.values()).map((item) => (
             <TaskItem
               itemInput={item.taskName}
               itemID={item.taskID}

@@ -6,7 +6,7 @@ import { listObject, userObject } from "../../types/types";
 import { initiateNewList } from "../../components/listContainer/listContainer";
 import { initiateNewTask } from "../../components/taskContainer/taskContainer";
 import { useGlobalListContext } from "../../context/list";
-import { useGlobalCurrentTasksContext } from "../../context/currentTasks";
+import { useGlobalCurrentListContext } from "../../context/currentList";
 import { alerts } from "../../utils/enums";
 
 export default function Login() {
@@ -14,7 +14,7 @@ export default function Login() {
   const [password, setPassword] = useState<string>("");
   const { setUser } = useGlobalUserContext();
   const { reloadNewList, clearList } = useGlobalListContext();
-  const { clearCurrentList } = useGlobalCurrentTasksContext();
+  const { clearCurrentList } = useGlobalCurrentListContext();
   const navigate = useNavigate();
 
   const handleUserChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -100,8 +100,8 @@ export default function Login() {
           );
           newTask.info.date = response.data[1][j]["date"];
           if (response.data[1][j]["status"])
-            userLists[i].completedTasks.push(newTask);
-          else userLists[i].pendingTasks.push(newTask);
+            userLists[i].completedTasks.set(newTask.taskID, newTask);
+          else userLists[i].pendingTasks.set(newTask.taskID, newTask);
         }
       }
     }

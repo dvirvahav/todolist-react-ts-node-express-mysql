@@ -2,7 +2,7 @@ import ListItem from "./listItem";
 
 import { ChangeEvent, useState, FormEvent } from "react";
 import { listObject, taskObject } from "../../types/types";
-import { useGlobalCurrentTasksContext } from "../../context/currentTasks";
+import { useGlobalCurrentListContext } from "../../context/currentList";
 import { useGlobalListContext } from "../../context/list";
 
 import { useGlobalCurrentListIDContext } from "../../context/currentListID";
@@ -13,7 +13,7 @@ import { useGlobalUserContext } from "../../context/user";
 
 export default function ListContainer() {
   const [input, setInput] = useState<string>("");
-  const { setCurrentList } = useGlobalCurrentTasksContext();
+  const { setCurrentList } = useGlobalCurrentListContext();
   const { lists, addNewList } = useGlobalListContext();
   const { setCurrentListID } = useGlobalCurrentListIDContext();
   const { profile } = useGlobalUserContext();
@@ -33,7 +33,7 @@ export default function ListContainer() {
       } else {
         setCurrentListID(response.data[0]["id"]); // mysql auto-increment returns the id of the new list
         newList = initiateNewList(response.data[0]["id"], input); // set new list with the id
-        setCurrentList(newList.pendingTasks.slice()); // set the list as current
+        setCurrentList(newList.pendingTasks); // set the list as current
         addNewList(newList); // add the list to items
       }
     });
@@ -78,8 +78,8 @@ export default function ListContainer() {
 
 // This function help to create new list
 export function initiateNewList(serial: number, input: string): listObject {
-  let completed: taskObject[] = [];
-  let pending: taskObject[] = [];
+  let completed: Map<number, taskObject> = new Map<number, taskObject>();
+  let pending: Map<number, taskObject> = new Map<number, taskObject>();
 
   let newListItem: listObject = {
     listID: serial,
