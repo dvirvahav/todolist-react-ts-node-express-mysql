@@ -8,16 +8,15 @@ import { ListContextProvider } from '../../context/list';
 import { CurrentListContextProvider } from '../../context/currentList';
 import { CurrentListIDContextProvider } from '../../context/currentListID';
 import { UserContextProvider } from '../../context/user';
-import { ColorSchemesExample } from './navbar';
 
 const App: FC = () => {
   return (
     <BrowserRouter>
       <div className='App'>
         <nav>
-          <Link to='/home'>
+          {/* <Link to='/home'>
             <input type='text' className='nav-bar-item' value='Home' readOnly />
-          </Link>
+          </Link> */}
           <Link to='/login'>
             <input
               type='text'
@@ -35,7 +34,7 @@ const App: FC = () => {
             />
           </Link>
         </nav>
-        <ColorSchemesExample />
+
         <CurrentListContextProvider>
           <CurrentListIDContextProvider>
             <CurrentTaskContextProvider>
