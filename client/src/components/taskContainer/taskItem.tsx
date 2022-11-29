@@ -1,44 +1,41 @@
-import Axios from "axios";
-import { ChangeEvent, useState } from "react";
-import { useGlobalCurrentListIDContext } from "../../context/currentListID";
-import { useGlobalCurrentTaskContext } from "../../context/currentTask";
-import { useGlobalCurrentListContext } from "../../context/currentList";
-import { useGlobalListContext } from "../../context/list";
+import Axios from 'axios';
+import { ChangeEvent, useState, FC } from 'react';
+import { useCurrentListIDContext } from '../../context/currentListID';
+import { useCurrentTaskContext } from '../../context/currentTask';
+import { useCurrentListContext } from '../../context/currentList';
+import { useListContext } from '../../context/list';
 
-export default function TaskItem({
-  itemInput,
-  itemID,
-  itemStatus,
-}: {
+export const TaskItem: FC<{
   itemInput: string;
   itemID: number;
   itemStatus: number;
-}) {
-  const { currentListID } = useGlobalCurrentListIDContext();
-  const { lists } = useGlobalListContext();
-  const { setCurrentList, clearCurrentList } = useGlobalCurrentListContext();
-  const { setCurrentTask } = useGlobalCurrentTaskContext();
+}> = ({ itemInput, itemID, itemStatus }) => {
+  const { currentListID } = useCurrentListIDContext();
+  const { lists } = useListContext();
+  const { setCurrentList } = useCurrentListContext();
+  const { setCurrentTask } = useCurrentTaskContext();
 
   const [input, setInput] = useState<string>(itemInput);
-  const [buttonInput, setButtonInput] = useState<string>("Edit");
-  const [readOnly, setReadOnly] = useState<boolean>(true); // change state to readonly and vise versa
+  const [buttonInput, setButtonInput] = useState<string>('Edit');
+  const [readOnly, setReadOnly] = useState<boolean>(true);
 
-  // remove task from items & data base
   const handleRemove = () => {
-    // save change in database
-    Axios.post("/api/removeTask", {
+    Axios.post('/api/removeTask', {
       taskID: itemID,
     }).then((response) => {
-      if (response.data === "Error") {
-        alert("Something went wrong, list not deleted");
+      if (response.data === 'Error') {
+        alert('Something went wrong, list not deleted');
       } else {
-        lists.map((item) => {
+        lists.forEach((item) => {
           if (item.listID === currentListID) {
-            item.pendingTasks.delete(itemID);
-            clearCurrentList();
-            setCurrentList(item.pendingTasks);
+            const index = item.pendingTasks
+              .map((taskItem) => taskItem.taskID)
+              .indexOf(itemID);
+
+            item.pendingTasks = item.pendingTasks.splice(index, 1);
+
+            setCurrentList(item.pendingTasks.slice());
           }
-          return item;
         });
       }
     });
@@ -50,23 +47,26 @@ export default function TaskItem({
   const handleSave = () => {
     setReadOnly(!readOnly);
     if (readOnly) {
-      setButtonInput("Save");
+      setButtonInput('Save');
       return;
-    } else setButtonInput("Edit");
+    } else setButtonInput('Edit');
 
-    Axios.post("/api/updateTask", {
+    Axios.post('/api/updateTask', {
       taskID: itemID,
       newName: input,
     }).then((response) => {
-      if (response.data === "Error") {
-        alert("Something went wrong, task name not updated in db");
+      if (response.data === 'Error') {
+        alert('Something went wrong, task name not updated in db');
       } else {
-        lists.map((item) => {
+        lists.forEach((item) => {
           if (item.listID === currentListID) {
-            let ref = item.pendingTasks.get(itemID);
-            if (ref === undefined) {
-            } else ref.taskName = input;
-            setCurrentList(item.pendingTasks);
+            item.pendingTasks.forEach((taskItem) => {
+              if (taskItem.taskID === itemID) {
+                taskItem.taskName = input;
+              }
+            });
+
+            setCurrentList(item.pendingTasks.slice());
           }
         });
       }
@@ -74,14 +74,14 @@ export default function TaskItem({
   };
 
   const handleClick = () => {
-    lists.map((item) => {
+    lists.forEach((item) => {
       if (item.listID === currentListID) {
         if (itemStatus) {
-          Array.from(item.completedTasks.values()).map((item) => {
+          item.completedTasks.forEach((item) => {
             if (item.taskID === itemID) setCurrentTask(item);
           });
         } else {
-          Array.from(item.pendingTasks.values()).map((item) => {
+          item.pendingTasks.forEach((item) => {
             if (item.taskID === itemID) setCurrentTask(item);
           });
         }
@@ -121,19 +121,19 @@ export default function TaskItem({
   };
 
   return (
-    <li className="taskItem item" id={"task" + itemID} onClick={handleClick}>
-      <input type="checkbox" onChange={handleCheck} />
+    <li className='taskItem item' id={'task' + itemID} onClick={handleClick}>
+      <input type='checkbox' onChange={handleCheck} />
       <input
-        type="text"
+        type='text'
         value={input}
         readOnly={readOnly}
         maxLength={20}
         onChange={handleChange}
       />
-      <div className="buttonsGrid">
+      <div className='buttonsGrid'>
         <button onClick={handleSave}>{buttonInput}</button>
         <button onClick={handleRemove}>Remove</button>
       </div>
     </li>
   );
-}
+};

@@ -1,9 +1,9 @@
-@import url("./components/infoContainer/infoContainer.css");
-@import url("./components/taskContainer/taskContainer.css");
-@import url("./components/listContainer/listContainer.css");
-@import url("./pages/login/login.css");
+@import url('./components/infoContainer/infoContainer.css');
+@import url('./components/taskContainer/taskContainer.css');
+@import url('./components/listContainer/listContainer.css');
+@import url('./pages/login/login.css');
 * {
-  font-family: "Courier New", Courier, monospace;
+  font-family: 'Courier New', Courier, monospace;
   letter-spacing: -1px;
   margin: 0;
   border-radius: 10px;
@@ -71,7 +71,7 @@ h1 {
   list-style: none;
 }
 
-.item /* task properties */ {
+.item {
   cursor: pointer;
   height: 35px;
   margin: 20px;
@@ -83,7 +83,7 @@ h1 {
   box-shadow: 0 10px 20px rgba(203, 203, 212, 0.15);
 }
 
-.item:hover/* task & list hover properties */ {
+.item:hover {
   box-shadow: 0 5px 15px rgba(71, 171, 237, 0.912);
   transform: scale(1.03);
 }

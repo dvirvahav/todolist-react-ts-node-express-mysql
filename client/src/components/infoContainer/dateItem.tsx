@@ -1,3 +1,5 @@
-export default function DateItem({ date }: { date: string }) {
-  return <li> {"Date:" + date}</li>;
-}
+import { FC } from 'react';
+
+export const DateItem: FC<{ date: string }> = ({ date }) => {
+  return <li> {'Date:' + date}</li>;
+};

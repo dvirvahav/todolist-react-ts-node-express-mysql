@@ -1,58 +1,54 @@
-import ListItem from "./listItem";
+import { ListItem } from './listItem';
 
-import { ChangeEvent, useState, FormEvent } from "react";
-import { listObject, taskObject } from "../../types/types";
-import { useGlobalCurrentListContext } from "../../context/currentList";
-import { useGlobalListContext } from "../../context/list";
+import { ChangeEvent, useState, FormEvent, FC } from 'react';
+import { listObject, taskObject } from '../../types/types';
+import { useCurrentListContext } from '../../context/currentList';
+import { useListContext } from '../../context/list';
 
-import { useGlobalCurrentListIDContext } from "../../context/currentListID";
-import Axios from "axios";
-import { useGlobalUserContext } from "../../context/user";
+import { useCurrentListIDContext } from '../../context/currentListID';
+import Axios from 'axios';
+import { useUserContext } from '../../context/user';
 
-/* This function contains all the lists and save & fetch data from and to mysql DB*/
+export const ListContainer: FC = () => {
+  const [input, setInput] = useState<string>('');
+  const { setCurrentList } = useCurrentListContext();
+  const { lists, addNewList } = useListContext();
+  const { setCurrentListID } = useCurrentListIDContext();
+  const { profile } = useUserContext();
 
-export default function ListContainer() {
-  const [input, setInput] = useState<string>("");
-  const { setCurrentList } = useGlobalCurrentListContext();
-  const { lists, addNewList } = useGlobalListContext();
-  const { setCurrentListID } = useGlobalCurrentListIDContext();
-  const { profile } = useGlobalUserContext();
-
-  /*This function add new list to user's lists */
   const handleSubmit = (event: FormEvent): void => {
-    event.preventDefault(); // prevent page from re-render
+    event.preventDefault();
     let newList: listObject = {} as listObject;
 
-    // make a connection to DB and save the new list
-    Axios.post("/api/insertList", {
+    Axios.post('/api/insertList', {
       listName: input,
       username: profile.username,
     }).then((response) => {
-      if (response.data === "Error") {
-        alert("Something went wrong, list not saved in db");
+      if (response.data === 'Error') {
+        alert('Something went wrong, list not saved in db');
       } else {
-        setCurrentListID(response.data[0]["id"]); // mysql auto-increment returns the id of the new list
-        newList = initiateNewList(response.data[0]["id"], input); // set new list with the id
-        setCurrentList(newList.pendingTasks); // set the list as current
-        addNewList(newList); // add the list to items
+        setCurrentListID(response.data[0]['id']);
+        newList = initiateNewList(response.data[0]['id'], input);
+        setCurrentList(newList.pendingTasks);
+        addNewList(newList);
       }
     });
 
-    setInput(""); // clear add list field
+    setInput('');
   };
 
-  // handle input change
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
   };
 
   return (
-    <div className="listContainer">
-      <h1 className="headline">Lists</h1>
-      <ul className="categoryList">
+    <div className='listContainer'>
+      <h1 className='headline'>Lists</h1>
+      <ul className='categoryList'>
         <ul>
-          {lists.map((item) => (
+          {lists.map((item, idx) => (
             <ListItem
+              key={`${item.listID}-${idx}`}
               itemInput={item.listName}
               itemID={item.listID}
               isActive={item.isActive}
@@ -60,32 +56,29 @@ export default function ListContainer() {
           ))}
         </ul>
       </ul>
-      <form className="formAddList" onSubmit={handleSubmit}>
+      <form className='formAddList' onSubmit={handleSubmit}>
         <button>+</button>
         <input
-          className="listInput"
-          type="text"
-          placeholder="Add a list"
+          className='listInput'
+          type='text'
+          placeholder='Add a list'
           maxLength={20}
-          value={input} // in order to clear it with setInputValue
-          onChange={handleChange} // updating InputValue
+          value={input}
+          onChange={handleChange}
           required
         />
       </form>
     </div>
   );
-}
+};
 
 // This function help to create new list
 export function initiateNewList(serial: number, input: string): listObject {
-  let completed: Map<number, taskObject> = new Map<number, taskObject>();
-  let pending: Map<number, taskObject> = new Map<number, taskObject>();
-
   let newListItem: listObject = {
     listID: serial,
     listName: input,
-    completedTasks: completed,
-    pendingTasks: pending,
+    completedTasks: [] as taskObject[],
+    pendingTasks: [] as taskObject[],
     isActive: false,
   };
 

@@ -1,17 +1,17 @@
-import "./Home.css";
-import ListContainer from "../../components/listContainer/listContainer";
-import TaskContainer from "../../components/taskContainer/taskContainer";
-import InfoContainer from "../../components/infoContainer/infoContainer";
-import React from "react";
+import './Home.css';
+import { ListContainer } from '../../components/listContainer/listContainer';
+import { TaskContainer } from '../../components/taskContainer/taskContainer';
+import { InfoContainer } from '../../components/infoContainer/infoContainer';
+import React, { FC } from 'react';
 
-function Home() {
+const Home: FC = () => {
   return (
-    <div className="Home">
+    <div className='Home'>
       <ListContainer />
       <TaskContainer />
       <InfoContainer />
     </div>
   );
-}
+};
 
 export default Home;

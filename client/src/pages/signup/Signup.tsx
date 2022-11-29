@@ -1,35 +1,20 @@
-import { ChangeEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Axios from "axios";
-export default function Signup() {
-  const [username, setUsername] = useState<string>("");
-  const [mail, setMail] = useState<string>("");
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+import { FC, useState } from 'react';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
+import Axios from 'axios';
 
-  const navigate = useNavigate();
+export const Signup: FC = () => {
+  const [username, setUsername] = useState<string>('');
+  const [mail, setMail] = useState<string>('');
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  const handleUserChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
-  };
-  const handlePassChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-  const handleMailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setMail(e.target.value);
-  };
-  const handleFirstnameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFirstName(e.target.value);
-  };
-  const handleLastnameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setLastName(e.target.value);
-  };
+  const navigate: NavigateFunction = useNavigate();
 
   const handleSignup = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
-    Axios.post("/api/signup", {
+    Axios.post('/api/signup', {
       username: username,
       mail: mail,
       firstName: firstName,
@@ -37,8 +22,8 @@ export default function Signup() {
       password: password,
     })
       .then((response) => {
-        if (response.data !== "Error") {
-          navigate("/login");
+        if (response.data !== 'Error') {
+          navigate('/login');
         }
       })
       .catch(() => {
@@ -46,71 +31,70 @@ export default function Signup() {
       });
   };
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-    navigate("/login");
-  };
-
   return (
-    <div className="Login-body">
-      <div className="Login">
+    <div className='Login-body'>
+      <div className='Login'>
         <h1>Please fill the form</h1>
-        <form method="post" onSubmit={handleSignup}>
+        <form method='post' onSubmit={handleSignup}>
           <input
-            type="text"
-            placeholder="Username"
+            type='text'
+            placeholder='Username'
             required
             value={username}
-            onChange={handleUserChange}
+            onChange={(event) => setUsername(event.target.value)}
           />
           <br />
           <input
-            type="email"
-            placeholder="Email"
+            type='email'
+            placeholder='Email'
             required
             value={mail}
-            onChange={handleMailChange}
+            onChange={(event) => setMail(event.target.value)}
           />
           <br />
 
           <input
-            type="text"
-            placeholder="first name"
+            type='text'
+            placeholder='first name'
             required
             value={firstName}
-            onChange={handleFirstnameChange}
+            onChange={(event) => setFirstName(event.target.value)}
           />
           <br />
           <input
-            type="text"
-            placeholder="last name"
+            type='text'
+            placeholder='last name'
             required
             value={lastName}
-            onChange={handleLastnameChange}
+            onChange={(event) => setLastName(event.target.value)}
           />
           <br />
           <input
-            type="password"
-            placeholder="Password"
+            type='password'
+            placeholder='Password'
             required
             value={password}
-            onChange={handlePassChange}
+            onChange={(event) => setPassword(event.target.value)}
+            autoComplete='new-password'
           />
 
           <br />
           <br />
-          <input type="submit" className="Login-button" value="Register" />
+          <input type='submit' className='Login-button' value='Register' />
 
           <br />
           <br />
           <br />
         </form>
         <input
-          type="submit"
-          value="Already have an account? Click here"
-          onClick={handleSubmit}
+          type='text'
+          value='Already have an account? Click here'
+          onClick={() => {
+            navigate('/login');
+          }}
+          readOnly
         />
       </div>
     </div>
   );
-}
+};

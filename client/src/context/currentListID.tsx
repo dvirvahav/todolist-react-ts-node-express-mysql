@@ -1,18 +1,18 @@
-import { createContext, useContext, useState } from "react";
-import { currentListID } from "../types/types";
+import { createContext, useContext, useState } from 'react';
+import { currentListID } from '../types/types';
 
-export const useGlobalCurrentListIDContext = () =>
-  useContext(CurrentListIDContext);
+export const useCurrentListIDContext = () => useContext(CurrentListIDContext);
 
-export const CurrentListIDContext = createContext<currentListID>({
-  currentListID: 0,
-  setCurrentListID: () => {},
-});
+export const CurrentListIDContext: React.Context<currentListID> =
+  createContext<currentListID>({
+    currentListID: 0,
+    setCurrentListID: () => {},
+  });
 
-export default function CurrentListIDContextProvider({
+export function CurrentListIDContextProvider({
   children,
 }: {
-  children: any;
+  children: JSX.Element;
 }) {
   const [currentListID, setCurrentListID] = useState<number>(0);
 

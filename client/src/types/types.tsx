@@ -6,14 +6,9 @@ export type listsContextProps = {
   lists: listObject[];
 };
 
-// export type currentBackendState = {
-//   backEndData: {};
-//   setBackEndData: (backEndData: any) => void;
-// };
-
 export type currentListState = {
-  currentList: Map<number, taskObject>;
-  setCurrentList: (currentList: Map<number, taskObject>) => void;
+  currentList: taskObject[];
+  setCurrentList: (currentList: taskObject[]) => void;
   clearCurrentList: () => void;
 };
 
@@ -38,8 +33,8 @@ export type currentListID = {
 export type listObject = {
   listName: string;
   listID: number;
-  completedTasks: Map<number, taskObject>;
-  pendingTasks: Map<number, taskObject>;
+  completedTasks: taskObject[];
+  pendingTasks: taskObject[];
   isActive: boolean;
 };
 export type userObject = {
@@ -52,12 +47,3 @@ export type userState = {
   profile: userObject;
   setUser: (profile: userObject) => void;
 };
-
-// export type listSerial = {
-//   serial: number;
-//   setNewSerial: (serial: number) => void;
-// };
-// export type taskSerial = {
-//   taskSerial: number;
-//   setNewTaskSerial: (taskSerial: number) => void;
-// };

@@ -1,25 +1,21 @@
-import { createContext, useCallback, useContext, useState } from "react";
-import { currentListState, taskObject } from "../types/types";
+import { createContext, useCallback, useContext, useState } from 'react';
+import { currentListState, taskObject } from '../types/types';
 
-export const useGlobalCurrentListContext = () => useContext(CurrentListContext);
-export const CurrentListContext = createContext<currentListState>({
-  currentList: new Map<number, taskObject>(),
-  clearCurrentList: () => {},
-  setCurrentList: () => {},
-});
+export const useCurrentListContext = () => useContext(CurrentListContext);
+export const CurrentListContext: React.Context<currentListState> =
+  createContext<currentListState>({
+    currentList: [],
+    clearCurrentList: () => {},
+    setCurrentList: () => {},
+  });
 
-export default function CurrentListContextProvider({
+export function CurrentListContextProvider({
   children,
 }: {
-  children: any;
+  children: JSX.Element;
 }) {
-  const [currentList, setCurrentList] = useState<Map<number, taskObject>>(
-    new Map<number, taskObject>()
-  );
-  const clearCurrentList = useCallback(
-    () => setCurrentList(new Map<number, taskObject>()),
-    []
-  );
+  const [currentList, setCurrentList] = useState<taskObject[]>([]);
+  const clearCurrentList = useCallback(() => setCurrentList([]), []);
   return (
     <CurrentListContext.Provider
       value={{ currentList, setCurrentList, clearCurrentList }}>

@@ -1,7 +1,7 @@
-import { createContext, useCallback, useContext, useState } from "react";
-import { listObject, listsContextProps } from "../types/types";
+import { createContext, useCallback, useContext, useState } from 'react';
+import { listObject, listsContextProps } from '../types/types';
 
-export const useGlobalListContext = () => useContext(ListContext);
+export const useListContext = () => useContext(ListContext);
 export const ListContext = createContext<listsContextProps>({
   addNewList: () => {},
   removeItem: () => {},
@@ -10,7 +10,7 @@ export const ListContext = createContext<listsContextProps>({
   lists: [],
 });
 
-export default function ListContextProvider({ children }: { children: any }) {
+export function ListContextProvider({ children }: { children: JSX.Element }) {
   const [lists, setLists] = useState<listObject[]>([]);
   const addNewList = useCallback(
     (newList: listObject) => setLists([...lists, newList]),

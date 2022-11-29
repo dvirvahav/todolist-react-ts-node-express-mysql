@@ -8,15 +8,9 @@
   background-color: none;
   display: grid;
   padding: 20px;
-
-  /*Inline + enlarge middle container */
-
   height: 70%;
   margin-left: 10px;
   margin-right: 10px;
-  /*make the grid fit when we minimize the window
-  grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); */
-
   gap: 1em;
 }
 .nav-bar-item {

@@ -1,25 +1,26 @@
-import { createContext, useContext, useState } from "react";
-import { currentTask, taskObject } from "../types/types";
+import { createContext, useContext, useState } from 'react';
+import { currentTask, taskObject } from '../types/types';
 
 export const taskTemp: taskObject = {
   taskID: 0,
-  taskName: "",
+  taskName: '',
   info: {
-    date: "",
+    date: '',
   },
   status: 0,
 };
-export const CurrentTaskContext = createContext<currentTask>({
-  currentTask: taskTemp,
-  setCurrentTask: () => {},
-});
+export const CurrentTaskContext: React.Context<currentTask> =
+  createContext<currentTask>({
+    currentTask: taskTemp,
+    setCurrentTask: () => {},
+  });
 
-export const useGlobalCurrentTaskContext = () => useContext(CurrentTaskContext);
+export const useCurrentTaskContext = () => useContext(CurrentTaskContext);
 
-export default function CurrentTaskContextProvider({
+export function CurrentTaskContextProvider({
   children,
 }: {
-  children: any;
+  children: JSX.Element;
 }) {
   const [currentTask, setCurrentTask] = useState<taskObject>(taskTemp);
 
