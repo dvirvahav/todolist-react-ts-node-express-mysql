@@ -1,12 +1,11 @@
-import Express from 'express';
-import mysql from 'mysql';
+import { Request, Response } from 'express';
+import { Connection, MysqlError } from 'mysql';
 
 export const updateTaskStatus =
-  (mySQLDataBase: mysql.Connection) =>
-  (request: Express.Request, response: Express.Response) => {
+  (mySQLDataBase: Connection) => (request: Request, response: Response) => {
     const taskID: string = request.body.taskID;
     const itemStatus: string = request.body.itemStatus;
-    const sqlDeleteTask = `UPDATE tasks
+    const sqlDeleteTask: string = `UPDATE tasks
     SET 
         status = ?
     WHERE
@@ -15,7 +14,7 @@ export const updateTaskStatus =
     mySQLDataBase.query(
       sqlDeleteTask,
       [itemStatus, taskID],
-      (error: mysql.MysqlError | null): void => {
+      (error: MysqlError | null): void => {
         if (error) {
           response.send('Error');
           console.log(error);

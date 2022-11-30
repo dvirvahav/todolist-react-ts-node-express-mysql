@@ -4,7 +4,7 @@ import { TaskContainer } from '../../components/taskContainer/taskContainer';
 import { InfoContainer } from '../../components/infoContainer/infoContainer';
 import React, { FC } from 'react';
 
-const Home: FC = () => {
+export const Home: FC = () => {
   return (
     <div className='Home'>
       <ListContainer />
@@ -13,5 +13,3 @@ const Home: FC = () => {
     </div>
   );
 };
-
-export default Home;

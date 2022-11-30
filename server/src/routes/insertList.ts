@@ -1,18 +1,17 @@
-import Express from 'express';
-import mysql from 'mysql';
+import { Request, Response } from 'express';
+import { Connection, FieldInfo, MysqlError } from 'mysql';
 
 export const insertList =
-  (mySQLDataBase: mysql.Connection) =>
-  (request: Express.Request, response: Express.Response) => {
+  (mySQLDataBase: Connection) => (request: Request, response: Response) => {
     const listName: string = request.body.listName;
     const username: string = request.body.username;
-    const sqlInsertList = `INSERT INTO lists (username,name) VALUES
+    const sqlInsertList: string = `INSERT INTO lists (username,name) VALUES
     (?,?)`;
 
     mySQLDataBase.query(
       sqlInsertList,
       [username, listName],
-      (error: mysql.MysqlError | null): void => {
+      (error: MysqlError | null): void => {
         if (error) {
           response.send('Error');
           console.log(error);
@@ -20,10 +19,7 @@ export const insertList =
           mySQLDataBase.query(
             'SELECT max(id) as id from lists where username=?',
             username,
-            (
-              error: mysql.MysqlError | null,
-              result: mysql.FieldInfo[]
-            ): void => {
+            (error: MysqlError | null, result: FieldInfo[]): void => {
               if (error) {
                 response.send('Error');
                 console.log(error);

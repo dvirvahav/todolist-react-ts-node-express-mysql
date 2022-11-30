@@ -2,7 +2,7 @@ import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import React, { FC } from 'react';
 import { Login } from '../login/Login';
 import { Signup } from '../signup/Signup';
-import Home from '../home/Home';
+import { Home } from '../home/Home';
 import { CurrentTaskContextProvider } from '../../context/currentTask';
 import { ListContextProvider } from '../../context/list';
 import { CurrentListContextProvider } from '../../context/currentList';

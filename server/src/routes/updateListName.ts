@@ -1,20 +1,18 @@
-import Express from 'express';
-import mysql from 'mysql';
+import { Request, Response } from 'express';
+import { Connection, MysqlError } from 'mysql';
 
 export const updateListName =
-  (mySQLDataBase: mysql.Connection) =>
-  (request: Express.Request, response: Express.Response) => {
+  (mySQLDataBase: Connection) => (request: Request, response: Response) => {
     const listID: string = request.body.listID;
     const newName: string = request.body.newName;
-
-    const sqlUpdateListName = `UPDATE lists
+    const sqlUpdateListName: string = `UPDATE lists
     SET name=?
     WHERE id=?;`;
 
     mySQLDataBase.query(
       sqlUpdateListName,
       [newName, listID],
-      (error: mysql.MysqlError | null): void => {
+      (error: MysqlError | null): void => {
         if (error) {
           response.send('Error');
           console.log(error);

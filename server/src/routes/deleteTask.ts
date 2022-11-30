@@ -1,16 +1,15 @@
-import Express from 'express';
-import mysql from 'mysql';
+import { Request, Response } from 'express';
+import { Connection, MysqlError } from 'mysql';
 
 export const deleteTask =
-  (mySQLDataBase: mysql.Connection) =>
-  (request: Express.Request, response: Express.Response) => {
+  (mySQLDataBase: Connection) => (request: Request, response: Response) => {
     const taskID: string = request.body.taskID;
-    const sqlDeleteTask = `DELETE from tasks where id=?;`;
+    const sqlDeleteTask: string = `DELETE from tasks where id=?;`;
 
     mySQLDataBase.query(
       sqlDeleteTask,
       [taskID],
-      (error: mysql.MysqlError | null): void => {
+      (error: MysqlError | null): void => {
         if (error) {
           response.send('Error');
           console.log(error);
