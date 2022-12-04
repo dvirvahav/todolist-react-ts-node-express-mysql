@@ -58,7 +58,7 @@ build/Release
 node_modules/
 jspm_packages/
 client/build/
-
+server/src/mailer/
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
