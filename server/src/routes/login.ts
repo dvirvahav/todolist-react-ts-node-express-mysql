@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Connection, FieldInfo, MysqlError } from 'mysql';
+import { transporter } from '../mailer/transport';
 
 export const login =
   (mySQLDataBase: Connection) => (request: Request, response: Response) => {

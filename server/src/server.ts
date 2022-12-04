@@ -1,5 +1,5 @@
 import cors from 'cors';
-import mysql from 'mysql';
+import { Connection, createConnection } from 'mysql';
 import Express from 'express';
 import bodyParser from 'body-parser';
 import { getAllData } from './routes/getAllData';
@@ -15,7 +15,7 @@ import { updateTaskStatus } from './routes/updateTaskStatus';
 
 const app = Express();
 const serverPort: number = 5000;
-const mySQLDataBase: mysql.Connection = mysql.createConnection({
+const mySQLDataBase: Connection = createConnection({
   host: 'localhost',
   user: 'root',
   password: 'password',
