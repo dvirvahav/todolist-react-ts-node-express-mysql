@@ -92,6 +92,7 @@ export const TaskContainer: FC = () => {
 export function initiateNewTask(serial: number, input: string): taskObject {
   const newInfoForTask: infoObject = {
     date: new Date().toLocaleString(),
+    dueDate: null,
   };
   const newTaskItem: taskObject = {
     taskID: serial,

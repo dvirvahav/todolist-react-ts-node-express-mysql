@@ -6,6 +6,7 @@ export const taskTemp: taskObject = {
   taskName: '',
   info: {
     date: '',
+    dueDate: null,
   },
   status: 0,
 };

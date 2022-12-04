@@ -32,7 +32,7 @@ export const TaskItem: FC<{
               .map((taskItem) => taskItem.taskID)
               .indexOf(itemID);
 
-            item.pendingTasks = item.pendingTasks.splice(index, 1);
+            item.pendingTasks.splice(index, 1);
 
             setCurrentList(item.pendingTasks.slice());
           }
