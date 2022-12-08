@@ -9,7 +9,7 @@ import { CurrentListContextProvider } from '../../context/currentList';
 import { CurrentListIDContextProvider } from '../../context/currentListID';
 import { UserContextProvider } from '../../context/user';
 
-const App: FC = () => {
+export const App: FC = () => {
   return (
     <BrowserRouter>
       <div className='App'>
@@ -55,5 +55,3 @@ const App: FC = () => {
     </BrowserRouter>
   );
 };
-
-export default App;

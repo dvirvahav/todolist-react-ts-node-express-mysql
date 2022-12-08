@@ -78,8 +78,8 @@ export const TaskContainer: FC = () => {
           className='taskInput'
           type='text'
           placeholder='Add a task'
-          maxLength={80}
-          size={80}
+          maxLength={90}
+          size={90}
           value={input} // in order to clear it with setInputValue
           onChange={handleChange} // updating InputValue
           required

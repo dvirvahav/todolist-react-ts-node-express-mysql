@@ -127,7 +127,8 @@ export const TaskItem: FC<{
         type='text'
         value={input}
         readOnly={readOnly}
-        maxLength={20}
+        size={90}
+        maxLength={90}
         onChange={handleChange}
       />
       <div className='buttonsGrid'>

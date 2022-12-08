@@ -9,11 +9,13 @@ export const InfoContainer: FC = () => {
     <div className='infoContainer'>
       <h1 className='headline'>Info</h1>
       <div className='taskInfo'>
-        <InfoItem
-          key={`${currentTask.taskID}`}
-          date={currentTask.info.date}
-          dueDate={currentTask.info.dueDate}
-        />
+        {
+          <InfoItem
+            key={`${currentTask.taskID}`}
+            date={currentTask.info.date}
+            dueDate={currentTask.info.dueDate}
+          />
+        }
       </div>
     </div>
   );
