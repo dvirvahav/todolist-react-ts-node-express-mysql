@@ -14,7 +14,9 @@ export type currentListState = {
 
 export type infoObject = {
   date: string;
+  dueDate: string | null;
 };
+
 export type currentTask = {
   currentTask: taskObject;
   setCurrentTask: (currentTask: taskObject) => void;

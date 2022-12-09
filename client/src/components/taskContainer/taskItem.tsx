@@ -32,7 +32,7 @@ export const TaskItem: FC<{
               .map((taskItem) => taskItem.taskID)
               .indexOf(itemID);
 
-            item.pendingTasks = item.pendingTasks.splice(index, 1);
+            item.pendingTasks.splice(index, 1);
 
             setCurrentList(item.pendingTasks.slice());
           }
@@ -127,7 +127,8 @@ export const TaskItem: FC<{
         type='text'
         value={input}
         readOnly={readOnly}
-        maxLength={20}
+        size={90}
+        maxLength={90}
         onChange={handleChange}
       />
       <div className='buttonsGrid'>
