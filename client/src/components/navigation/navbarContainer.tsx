@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 export const NavBar: FC = () => {
   const { profile } = useUserContext();
   return (
-    <Navbar bg='primary' variant='dark'>
+    <Navbar className='navbar navbar-light bg-light'>
       <Container>
         <Navbar.Brand href='#home'>ToDoList</Navbar.Brand>
         <Navbar.Toggle />

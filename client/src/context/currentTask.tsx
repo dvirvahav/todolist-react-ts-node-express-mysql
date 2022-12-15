@@ -14,6 +14,8 @@ export const CurrentTaskContext: Context<currentTask> =
   createContext<currentTask>({
     currentTask: taskTemp,
     setCurrentTask: () => {},
+    isHidden: false,
+    setIsHidden: () => {},
   });
 
 export const useCurrentTaskContext = () => useContext(CurrentTaskContext);
@@ -24,9 +26,10 @@ export function CurrentTaskContextProvider({
   children: JSX.Element;
 }) {
   const [currentTask, setCurrentTask] = useState<taskObject>(taskTemp);
-
+  const [isHidden, setIsHidden] = useState(false);
   return (
-    <CurrentTaskContext.Provider value={{ currentTask, setCurrentTask }}>
+    <CurrentTaskContext.Provider
+      value={{ currentTask, setCurrentTask, isHidden, setIsHidden }}>
       {children}
     </CurrentTaskContext.Provider>
   );

@@ -17,6 +17,7 @@ export const TaskItem: FC<{
   const [input, setInput] = useState<string>(itemInput);
   const [buttonInput, setButtonInput] = useState<string>('Edit');
   const [readOnly, setReadOnly] = useState<boolean>(true);
+  const { setIsHidden } = useCurrentTaskContext();
 
   const handleRemove = () => {
     Axios.post('/api/removeTask', {
@@ -90,6 +91,7 @@ export const TaskItem: FC<{
   };
 
   const handleClick = () => {
+    setIsHidden(false);
     lists.forEach((item) => {
       if (item.listID === currentListID) {
         if (itemStatus) {

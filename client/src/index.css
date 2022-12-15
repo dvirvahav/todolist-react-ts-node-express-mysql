@@ -26,10 +26,16 @@
   background: rgb(223, 217, 217);
 }
 
-h6 {
+.headline {
+  width: 100px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 800;
   margin: 2px;
 }
-
+.headline:hover {
+  cursor: inherit;
+}
 .categoryList,
 .taskInfo {
   height: 400px;
@@ -41,25 +47,34 @@ h6 {
 
 .item {
   cursor: pointer;
-  height: 40px;
-  font-size: 10px;
+  height: 30px;
+  font-size: 13px;
   overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  background-color: rgba(213, 213, 219, 0.951);
   background-color: var(--color-bg-secondary);
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(249, 249, 249, 0.15);
+  box-shadow: 1px 1px 1px 1px rgba(213, 213, 219, 0.951);
 }
 
 .item:hover {
-  transform: scale(1.02);
+  transform: scale(0.98);
+  background-color: #78727215;
+
+  z-index: 1; /* optional */
 }
 
+/* Case task was selected */
+.active {
+  transform: scale(1.02);
+  background-color: #78727215;
+}
 input {
   border: none;
   background: none;
   padding: 5px;
-
   cursor: inherit;
 }
 
@@ -75,19 +90,15 @@ input:focus {
   padding: 2px;
 }
 
-/* Case task was selected */
-.active {
-  box-shadow: 0 5px 15px rgba(244, 238, 238, 0.681);
-  transform: scale(1.02);
-}
-
 .formAdd {
+  font-size: 13px;
   height: 30px;
 }
 button {
   background-color: inherit;
   border: none;
 }
+
 button:hover {
   background-color: #bacee2c4;
   color: white;

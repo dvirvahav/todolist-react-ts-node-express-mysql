@@ -14,6 +14,7 @@ export const ListContext: Context<listsContextProps> =
     removeItem: () => {},
     clearList: () => {},
     reloadNewList: () => {},
+    setActiveItem: () => {},
     lists: [],
   });
 
@@ -30,13 +31,32 @@ export function ListContextProvider({ children }: { children: JSX.Element }) {
   const clearList = useCallback(() => setLists([]), []);
 
   const removeItem = useCallback(
-    (itemID: number) => setLists(lists.filter((t) => t.listID !== itemID)),
+    (itemID: number) =>
+      setLists(lists.filter((item) => item.listID !== itemID)),
     [lists]
   );
-
+  const setActiveItem = useCallback(
+    (itemID: number) =>
+      setLists(
+        lists.map((item) => {
+          if (item.listID === itemID) {
+            item.isActive = true;
+          } else item.isActive = false;
+          return item;
+        })
+      ),
+    [lists]
+  );
   return (
     <ListContext.Provider
-      value={{ lists, reloadNewList, clearList, removeItem, addNewList }}>
+      value={{
+        lists,
+        reloadNewList,
+        clearList,
+        removeItem,
+        addNewList,
+        setActiveItem,
+      }}>
       {children}
     </ListContext.Provider>
   );

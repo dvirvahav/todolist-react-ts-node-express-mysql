@@ -11,23 +11,31 @@ export const ListItem: FC<{
   itemInput: string;
   itemID: number;
   isActive: boolean;
-}> = ({ itemInput, itemID }) => {
+}> = ({ itemInput, itemID, isActive }) => {
   const { setCurrentList } = useCurrentListContext();
-  const { lists, removeItem } = useListContext();
+  const { lists, removeItem, setActiveItem } = useListContext();
   const { currentListID, setCurrentListID } = useCurrentListIDContext();
   const [buttonInput, setButtonInput] = useState<string>('Edit');
   const [readOnly, setReadOnly] = useState<boolean>(true);
   const [input, setInput] = useState<string>(itemInput);
   const { setCurrentTask } = useCurrentTaskContext();
-
+  const { setIsHidden } = useCurrentTaskContext();
   const handleSetList = () => {
+    setIsHidden(true);
     setCurrentListID(itemID);
     setCurrentTask(taskTemp);
-    lists.forEach((item: { listID: number; pendingTasks: taskObject[] }) => {
-      if (item.listID === itemID) {
-        setCurrentList(item.pendingTasks);
+    lists.forEach(
+      (item: {
+        listID: number;
+        pendingTasks: taskObject[];
+        isActive: boolean;
+      }) => {
+        if (item.listID === itemID) {
+          setActiveItem(item.listID);
+          setCurrentList(item.pendingTasks);
+        }
       }
-    });
+    );
   };
 
   const handleRemove = () => {
@@ -80,7 +88,10 @@ export const ListItem: FC<{
   };
 
   return (
-    <li className='item' id={'list' + itemID} onClick={handleSetList}>
+    <li
+      className={isActive ? 'item active' : 'item'}
+      id={'list' + itemID}
+      onClick={handleSetList}>
       <input
         type='text'
         value={input}

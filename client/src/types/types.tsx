@@ -3,6 +3,7 @@ export type listsContextProps = {
   removeItem: (listID: number) => void;
   clearList: () => void;
   reloadNewList: (newList: listObject[]) => void;
+  setActiveItem: (listID: number) => void;
   lists: listObject[];
 };
 
@@ -20,6 +21,8 @@ export type infoObject = {
 export type currentTask = {
   currentTask: taskObject;
   setCurrentTask: (currentTask: taskObject) => void;
+  isHidden: boolean;
+  setIsHidden: (isHidden: boolean) => void;
 };
 export type taskObject = {
   taskID: number;

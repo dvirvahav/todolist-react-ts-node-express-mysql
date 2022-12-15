@@ -5,10 +5,10 @@ import { InfoItem } from './infoItem';
 export const InfoContainer: FC = () => {
   const { currentTask } = useCurrentTaskContext();
 
-  return (
+  return currentTask.info.date === '' ? (
+    <div className='empty-container'></div>
+  ) : (
     <div className='infoContainer'>
-      <h6 className='headline'>Task Info</h6>
-
       {currentTask ? (
         <InfoItem
           key={currentTask.taskID}

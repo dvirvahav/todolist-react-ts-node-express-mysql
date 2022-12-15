@@ -58,15 +58,16 @@ export const TaskContainer: FC = () => {
       });
   };
 
-  const handlePending = () => {};
-  const handleCompleted = () => {};
-
   return (
-    <div className='taskContainer'>
-      <h6 className='headline'>Tasks</h6>
-      <button onClick={handlePending}> Pending </button>
-      <button onClick={handleCompleted}> Completed </button>
+    <div className='taskContainer ${}'>
+      <text className='headline'>
+        {lists.map((item) => {
+          if (item.listID === currentListID) return item.listName;
+        })}
+      </text>
+      <br /> <br />
       <div className='allLists'>
+        <i className='ti ti-brand-tabler'></i>
         <ul className='pendingTaskList'>
           {currentList.map((item, idx) => (
             <TaskItem

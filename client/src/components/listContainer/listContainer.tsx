@@ -8,7 +8,6 @@ export const ListContainer: FC = () => {
 
   return (
     <div className='listContainer'>
-      <h6 className='headline'>Lists</h6>
       <ul className='pendingTaskList'>
         {lists.map((item, idx) => (
           <ListItem
@@ -22,9 +21,8 @@ export const ListContainer: FC = () => {
       <form className='formAddList' onSubmit={handleSubmit}>
         <button>+</button>
         <input
-          className='listInput'
           type='text'
-          placeholder='Add a list'
+          placeholder='New list'
           maxLength={20}
           value={input}
           onChange={handleChange}

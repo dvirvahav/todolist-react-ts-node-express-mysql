@@ -4,4 +4,5 @@
   display: grid;
   position: relative;
   background-color: rgba(253, 253, 253, 0.897);
+  padding-top: 5px;
 }
