@@ -5,18 +5,17 @@
 }
 
 .Home {
+  margin: 10px;
   background-color: none;
   display: grid;
-  padding: 20px;
-  height: 70%;
-  margin-left: 10px;
-  margin-right: 10px;
-  gap: 1em;
+  height: 100%;
+  width: 100%;
+  gap: 0.5em;
 }
 
 .nav-bar-item {
   text-align: center;
-  background-color: rgb(46, 126, 196);
+  background-color: rgb(205, 212, 218);
   color: white;
-  margin: 25px;
+  margin: 10px;
 }

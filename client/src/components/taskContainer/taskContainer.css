@@ -1,50 +1,14 @@
 .taskContainer /* Parent */ {
-  background-color: rgba(255, 255, 255, 0.805);
   border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(52, 45, 233, 0.15);
-}
-
-.completedTaskList {
-  cursor: pointer;
-  list-style: none;
-  height: 600px;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  padding: 0;
-}
-
-.pendingTasks,
-.completedTasks {
-  text-align: center;
-  padding: 20px;
-
-  background-color: var(--color-bg-secondary);
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(162, 159, 159, 0.15);
-  background-color: rgba(255, 255, 255, 0.805);
+  width: 100%;
+  padding-right: 20px;
 }
 
 .pendingTaskList {
   cursor: pointer;
   list-style: none;
-  height: 600px;
+  height: 400px;
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 0;
-}
-.checkbox-round {
-  width: 1.3em;
-  height: 1.3em;
-  background-color: white;
-  border-radius: 50%;
-  vertical-align: middle;
-  border: 1px solid #ddd;
-  appearance: none;
-  -webkit-appearance: none;
-  outline: none;
-  cursor: pointer;
-}
-
-.checkbox-round:checked {
-  background-color: rgb(224, 28, 28);
 }

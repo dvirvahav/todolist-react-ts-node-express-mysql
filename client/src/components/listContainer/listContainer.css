@@ -1,9 +1,7 @@
 .listContainer {
-  grid-template-rows: 0.5fr 4fr 0.5fr;
-  display: grid;
-  padding: 10px;
-  position: relative;
-  background-color: rgba(255, 255, 255, 0.805);
+  grid-template-rows: 0.5fr 4fr 0.1fr;
   border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(162, 159, 159, 0.15);
+  display: grid;
+  position: relative;
+  background-color: rgba(253, 253, 253, 0.897);
 }

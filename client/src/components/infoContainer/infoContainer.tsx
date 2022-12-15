@@ -7,18 +7,17 @@ export const InfoContainer: FC = () => {
 
   return (
     <div className='infoContainer'>
-      <h1 className='headline'>Info</h1>
-      <div className='taskInfo'>
-        {currentTask ? (
-          <InfoItem
-            key={currentTask.taskID}
-            date={currentTask.info.date}
-            dueDate={currentTask.info.dueDate}
-          />
-        ) : (
-          <div>Loading...</div>
-        )}
-      </div>
+      <h6 className='headline'>Task Info</h6>
+
+      {currentTask ? (
+        <InfoItem
+          key={currentTask.taskID}
+          date={currentTask.info.date}
+          dueDate={currentTask.info.dueDate}
+        />
+      ) : (
+        <div>Loading...</div>
+      )}
     </div>
   );
 };

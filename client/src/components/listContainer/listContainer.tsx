@@ -8,18 +8,16 @@ export const ListContainer: FC = () => {
 
   return (
     <div className='listContainer'>
-      <h1 className='headline'>Lists</h1>
-      <ul className='categoryList'>
-        <ul>
-          {lists.map((item, idx) => (
-            <ListItem
-              key={`${item.listID}-${idx}`}
-              itemInput={item.listName}
-              itemID={item.listID}
-              isActive={item.isActive}
-            />
-          ))}
-        </ul>
+      <h6 className='headline'>Lists</h6>
+      <ul className='pendingTaskList'>
+        {lists.map((item, idx) => (
+          <ListItem
+            key={`${item.listID}-${idx}`}
+            itemInput={item.listName}
+            itemID={item.listID}
+            isActive={item.isActive}
+          />
+        ))}
       </ul>
       <form className='formAddList' onSubmit={handleSubmit}>
         <button>+</button>

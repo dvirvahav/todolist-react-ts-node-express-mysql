@@ -63,11 +63,9 @@ export const TaskContainer: FC = () => {
 
   return (
     <div className='taskContainer'>
-      <h1 className='headline'>Tasks</h1>
-      <div>
-        <button onClick={handlePending}> Pending</button>
-        <button onClick={handleCompleted}> Completed </button>
-      </div>
+      <h6 className='headline'>Tasks</h6>
+      <button onClick={handlePending}> Pending </button>
+      <button onClick={handleCompleted}> Completed </button>
       <div className='allLists'>
         <ul className='pendingTaskList'>
           {currentList.map((item, idx) => (

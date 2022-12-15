@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import React, { FC } from 'react';
 import { Login } from '../login/Login';
 import { Signup } from '../signup/Signup';
@@ -13,28 +13,6 @@ export const App: FC = () => {
   return (
     <BrowserRouter>
       <div className='App'>
-        <nav>
-          {/* <Link to='/home'>
-            <input type='text' className='nav-bar-item' value='Home' readOnly />
-          </Link> */}
-          <Link to='/login'>
-            <input
-              type='text'
-              className='nav-bar-item'
-              value='Login'
-              readOnly
-            />
-          </Link>
-          <Link to='/signup'>
-            <input
-              type='text'
-              className='nav-bar-item'
-              value='Register'
-              readOnly
-            />
-          </Link>
-        </nav>
-
         <CurrentListContextProvider>
           <CurrentListIDContextProvider>
             <CurrentTaskContextProvider>
@@ -55,3 +33,25 @@ export const App: FC = () => {
     </BrowserRouter>
   );
 };
+
+/* <nav>
+          {/* <Link to='/home'>
+            <input type='text' className='nav-bar-item' value='Home' readOnly />
+          </Link> 
+          <Link to='/login'>
+            <input
+              type='text'
+              className='nav-bar-item'
+              value='Login'
+              readOnly
+            />
+          </Link>
+          <Link to='/signup'>
+            <input
+              type='text'
+              className='nav-bar-item'
+              value='Register'
+              readOnly
+            />
+          </Link>
+        </nav> */

@@ -1,8 +1,5 @@
 .infoContainer {
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.805);
   border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(162, 159, 159, 0.15);
   display: grid;
   grid-template-rows: auto;
 }

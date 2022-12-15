@@ -104,51 +104,14 @@ export const TaskItem: FC<{
       }
     });
   };
-  const handleCheck = () => {
-    // Axios.post("/api/updateTaskStatus", {
-    //   taskID: itemID,
-    //   itemStatus: itemStatus ? 0 : 1,
-    // }).then((response) => {
-    //   if (response.data === "Error") {
-    //     alert("Something went wrong, task not updated");
-    //   } else {
-    //     lists.map((item) => {
-    //       if (item.listID === currentListID) {
-    //         if (itemStatus) {
-    //           item.completedTasks.map((item) => {
-    //             if (item.taskID === itemID) {
-    //               item.status = 0;
-    //             }
-    //             return item;
-    //           });
-    //         } else {
-    //           item.pendingTasks.map((item) => {
-    //             if (item.taskID === itemID) {
-    //               item.status = 1;
-    //             }
-    //             return item;
-    //           });
-    //         }
-    //       }
-    //       return item;
-    //     });
-    //   }
-    // });
-  };
 
   return (
     <li className='taskItem item' id={'task' + itemID} onClick={handleClick}>
       <input
-        type='checkbox'
-        className='checkbox-round'
-        onChange={handleCheck}
-      />
-      <input
         type='text'
         value={input}
         readOnly={readOnly}
-        size={70}
-        maxLength={90}
+        size={60}
         onChange={handleChange}
       />
       <div className='buttonsGrid'>

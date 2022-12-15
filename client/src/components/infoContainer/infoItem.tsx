@@ -30,11 +30,13 @@ export const InfoItem: FC<{ date: string; dueDate?: string }> = ({
     });
   };
 
-  return (
-    <ul>
-      <li> {'Date:' + date}</li>
+  return date === '' ? (
+    <ul className='pendingTaskList'></ul>
+  ) : (
+    <ul className='pendingTaskList'>
+      <li className='taskItem item'> {'Date:' + date}</li>
       <br></br>
-      <li>
+      <li className='taskItem item'>
         {currentTask.info.dueDate === undefined ? (
           <button onClick={handleDueDate}>Add due date</button>
         ) : (

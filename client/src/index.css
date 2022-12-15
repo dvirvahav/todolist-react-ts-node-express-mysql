@@ -3,23 +3,12 @@
 @import url('./components/listContainer/listContainer.css');
 @import url('./pages/login/login.css');
 * {
-  font-family: 'Courier New', Courier, monospace;
-  letter-spacing: -1px;
-  border-radius: 5px;
-}
-
-nav {
-  text-align: center;
-}
-body {
-  margin: 5%;
-  background-repeat: no-repeat;
-  background-color: #8cc9f2f0;
+  font-family: 'Helvetica';
 }
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  display: none;
 }
 
 /* Track */
@@ -29,40 +18,21 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: rgb(178, 173, 173);
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: rgb(223, 217, 217);
 }
 
-h1 {
-  text-align: center;
-  margin: 5px;
-}
-
-.tasksByStatus /* Child */ {
-  /*Set grid*/
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  height: 100px;
-  text-align: center;
-  padding: 0;
-}
-.headline {
-  text-align: center;
-  padding: 0;
-  height: 50px;
-  background-color: var(--color-bg-secondary);
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(162, 159, 159, 0.15);
+h6 {
+  margin: 2px;
 }
 
 .categoryList,
 .taskInfo {
-  height: 500px;
-
+  height: 400px;
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 0;
@@ -71,26 +41,25 @@ h1 {
 
 .item {
   cursor: pointer;
-  height: 66px;
-  margin: 20px;
+  height: 40px;
+  font-size: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
   background-color: var(--color-bg-secondary);
   border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(203, 203, 212, 0.15);
+  box-shadow: 0 10px 20px rgba(249, 249, 249, 0.15);
 }
 
 .item:hover {
-  box-shadow: 0 5px 15px rgba(71, 171, 237, 0.912);
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
 input {
   border: none;
   background: none;
   padding: 5px;
-  font-size: 16px;
+
   cursor: inherit;
 }
 
@@ -101,15 +70,15 @@ input:focus {
 
 .buttonsGrid {
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  right: 5px;
+  bottom: 5px;
   padding: 2px;
 }
 
 /* Case task was selected */
 .active {
-  box-shadow: 0 5px 15px rgba(231, 204, 205, 0.4);
-  transform: scale(1.03);
+  box-shadow: 0 5px 15px rgba(244, 238, 238, 0.681);
+  transform: scale(1.02);
 }
 
 .formAdd {
@@ -120,7 +89,7 @@ button {
   border: none;
 }
 button:hover {
-  background-color: #4895e2;
+  background-color: #bacee2c4;
   color: white;
   cursor: pointer;
 }
