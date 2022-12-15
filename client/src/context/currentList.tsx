@@ -1,8 +1,14 @@
-import { createContext, useCallback, useContext, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+  Context,
+} from 'react';
 import { currentListState, taskObject } from '../types/types';
 
 export const useCurrentListContext = () => useContext(CurrentListContext);
-export const CurrentListContext: React.Context<currentListState> =
+export const CurrentListContext: Context<currentListState> =
   createContext<currentListState>({
     currentList: [],
     clearCurrentList: () => {},

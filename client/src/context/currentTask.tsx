@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, Context } from 'react';
 import { currentTask, taskObject } from '../types/types';
 
 export const taskTemp: taskObject = {
@@ -6,11 +6,11 @@ export const taskTemp: taskObject = {
   taskName: '',
   info: {
     date: '',
-    dueDate: null,
+    dueDate: undefined,
   },
   status: 0,
 };
-export const CurrentTaskContext: React.Context<currentTask> =
+export const CurrentTaskContext: Context<currentTask> =
   createContext<currentTask>({
     currentTask: taskTemp,
     setCurrentTask: () => {},

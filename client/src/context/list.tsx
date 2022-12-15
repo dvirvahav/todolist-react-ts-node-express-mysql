@@ -1,14 +1,21 @@
-import { createContext, useCallback, useContext, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+  Context,
+} from 'react';
 import { listObject, listsContextProps } from '../types/types';
 
 export const useListContext = () => useContext(ListContext);
-export const ListContext = createContext<listsContextProps>({
-  addNewList: () => {},
-  removeItem: () => {},
-  clearList: () => {},
-  reloadNewList: () => {},
-  lists: [],
-});
+export const ListContext: Context<listsContextProps> =
+  createContext<listsContextProps>({
+    addNewList: () => {},
+    removeItem: () => {},
+    clearList: () => {},
+    reloadNewList: () => {},
+    lists: [],
+  });
 
 export function ListContextProvider({ children }: { children: JSX.Element }) {
   const [lists, setLists] = useState<listObject[]>([]);

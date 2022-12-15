@@ -14,7 +14,6 @@ export const TaskItem: FC<{
   const { lists } = useListContext();
   const { setCurrentList } = useCurrentListContext();
   const { setCurrentTask } = useCurrentTaskContext();
-
   const [input, setInput] = useState<string>(itemInput);
   const [buttonInput, setButtonInput] = useState<string>('Edit');
   const [readOnly, setReadOnly] = useState<boolean>(true);
@@ -22,55 +21,72 @@ export const TaskItem: FC<{
   const handleRemove = () => {
     Axios.post('/api/removeTask', {
       taskID: itemID,
-    }).then((response) => {
-      if (response.data === 'Error') {
-        alert('Something went wrong, list not deleted');
-      } else {
-        lists.forEach((item) => {
-          if (item.listID === currentListID) {
-            const index = item.pendingTasks
-              .map((taskItem) => taskItem.taskID)
-              .indexOf(itemID);
+    })
+      .then((response) => {
+        if (response.data === 'Error') {
+          alert('Something went wrong, list not deleted');
+        } else {
+          lists.forEach((item) => {
+            if (item.listID === currentListID) {
+              const index = item.pendingTasks
+                .map((taskItem) => taskItem.taskID)
+                .indexOf(itemID);
 
-            item.pendingTasks.splice(index, 1);
+              item.pendingTasks.splice(index, 1);
 
-            setCurrentList(item.pendingTasks.slice());
-          }
-        });
-      }
-    });
+              setCurrentList(item.pendingTasks.slice());
+            }
+          });
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
   };
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
+    setInput(() => {
+      return e.target.value;
+    });
   };
 
   const handleSave = () => {
-    setReadOnly(!readOnly);
+    setReadOnly(() => {
+      return !readOnly;
+    });
     if (readOnly) {
-      setButtonInput('Save');
+      setButtonInput(() => {
+        return 'Save';
+      });
       return;
-    } else setButtonInput('Edit');
+    } else
+      setButtonInput(() => {
+        return 'Edit';
+      });
 
     Axios.post('/api/updateTask', {
       taskID: itemID,
       newName: input,
-    }).then((response) => {
-      if (response.data === 'Error') {
-        alert('Something went wrong, task name not updated in db');
-      } else {
-        lists.forEach((item) => {
-          if (item.listID === currentListID) {
-            item.pendingTasks.forEach((taskItem) => {
-              if (taskItem.taskID === itemID) {
-                taskItem.taskName = input;
-              }
-            });
+    })
+      .then((response) => {
+        if (response.data === 'Error') {
+          alert('Something went wrong, task name not updated in db');
+        } else {
+          lists.forEach((item) => {
+            if (item.listID === currentListID) {
+              item.pendingTasks.forEach((taskItem) => {
+                if (taskItem.taskID === itemID) {
+                  taskItem.taskName = input;
+                }
+              });
 
-            setCurrentList(item.pendingTasks.slice());
-          }
-        });
-      }
-    });
+              setCurrentList(item.pendingTasks.slice());
+            }
+          });
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
   };
 
   const handleClick = () => {
@@ -122,12 +138,16 @@ export const TaskItem: FC<{
 
   return (
     <li className='taskItem item' id={'task' + itemID} onClick={handleClick}>
-      <input type='checkbox' onChange={handleCheck} />
+      <input
+        type='checkbox'
+        className='checkbox-round'
+        onChange={handleCheck}
+      />
       <input
         type='text'
         value={input}
         readOnly={readOnly}
-        size={90}
+        size={70}
         maxLength={90}
         onChange={handleChange}
       />

@@ -5,9 +5,7 @@
 * {
   font-family: 'Courier New', Courier, monospace;
   letter-spacing: -1px;
-  margin: 0;
-  border-radius: 10px;
-  color: #3ba4eb;
+  border-radius: 5px;
 }
 
 nav {
@@ -73,7 +71,7 @@ h1 {
 
 .item {
   cursor: pointer;
-  height: 35px;
+  height: 66px;
   margin: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -92,6 +90,7 @@ input {
   border: none;
   background: none;
   padding: 5px;
+  font-size: 16px;
   cursor: inherit;
 }
 
@@ -117,7 +116,8 @@ input:focus {
   height: 30px;
 }
 button {
-  background-color: rgba(255, 255, 255, 0.455);
+  background-color: inherit;
+  border: none;
 }
 button:hover {
   background-color: #4895e2;

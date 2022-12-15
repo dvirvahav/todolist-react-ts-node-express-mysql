@@ -19,6 +19,7 @@ export const ListItem: FC<{
   const [readOnly, setReadOnly] = useState<boolean>(true);
   const [input, setInput] = useState<string>(itemInput);
   const { setCurrentTask } = useCurrentTaskContext();
+
   const handleSetList = () => {
     setCurrentListID(itemID);
     setCurrentTask(taskTemp);
@@ -32,35 +33,50 @@ export const ListItem: FC<{
   const handleRemove = () => {
     Axios.post('/api/removeList', {
       listID: itemID,
-    }).then((response) => {
-      if (response.data === 'Error') {
-        alert('Something went wrong, list not deleted');
-      } else {
-        removeItem(itemID);
-      }
-    });
+    })
+      .then((response) => {
+        if (response.data === 'Error') {
+          alert('Something went wrong, list not deleted');
+        } else {
+          removeItem(itemID);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
   };
 
   const handleSave = () => {
-    setReadOnly(!readOnly);
+    setReadOnly(() => {
+      return !readOnly;
+    });
     if (!readOnly) {
-      setButtonInput('Edit');
+      setButtonInput(() => {
+        return 'Edit';
+      });
       return;
-    } else setButtonInput('Save');
+    } else
+      setButtonInput(() => {
+        return 'Save';
+      });
     Axios.post('/api/updateList', {
       listID: itemID,
       newName: input,
-    }).then((response) => {
-      if (response.data === 'Error') {
-        alert('Something went wrong, list not saved in db');
-      } else {
-        lists.forEach((item) => {
-          if (item.listID === currentListID) {
-            item.listName = input;
-          }
-        });
-      }
-    });
+    })
+      .then((response) => {
+        if (response.data === 'Error') {
+          alert('Something went wrong, list not saved in db');
+        } else {
+          lists.forEach((item) => {
+            if (item.listID === currentListID) {
+              item.listName = input;
+            }
+          });
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
   };
 
   return (

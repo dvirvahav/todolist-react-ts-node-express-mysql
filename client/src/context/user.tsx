@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, Context } from 'react';
 import { userObject, userState } from '../types/types';
 
 export const useUserContext = () => useContext(UserContext);
@@ -8,7 +8,7 @@ export const tempUser: userObject = {
   last: '',
   mail: '',
 };
-export const UserContext: React.Context<userState> = createContext<userState>({
+export const UserContext: Context<userState> = createContext<userState>({
   profile: tempUser,
   setUser: () => {},
 });

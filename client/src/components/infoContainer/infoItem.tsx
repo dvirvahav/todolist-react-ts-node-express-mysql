@@ -1,11 +1,11 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useCurrentListContext } from '../../context/currentList';
 import { useCurrentListIDContext } from '../../context/currentListID';
 
 import { useCurrentTaskContext } from '../../context/currentTask';
 import { useListContext } from '../../context/list';
 
-export const InfoItem: FC<{ date: string; dueDate: string | null }> = ({
+export const InfoItem: FC<{ date: string; dueDate?: string }> = ({
   date,
   dueDate,
 }) => {
@@ -14,9 +14,6 @@ export const InfoItem: FC<{ date: string; dueDate: string | null }> = ({
   const { lists } = useListContext();
   const { setCurrentList } = useCurrentListContext();
   const { setCurrentTask } = useCurrentTaskContext();
-  const [buttonInput, setButtonInput] = useState<string>('Edit');
-  const [readOnly, setReadOnly] = useState<boolean>(true);
-  const check = ` ${'dueDate:' + dueDate}`;
 
   const handleDueDate = () => {
     lists.forEach((item) => {
@@ -38,10 +35,16 @@ export const InfoItem: FC<{ date: string; dueDate: string | null }> = ({
       <li> {'Date:' + date}</li>
       <br></br>
       <li>
-        {dueDate === null ? (
+        {currentTask.info.dueDate === undefined ? (
           <button onClick={handleDueDate}>Add due date</button>
         ) : (
-          check
+          <li>
+            <input type='text' size={90} maxLength={90} />
+            <div className='buttonsGrid'>
+              <button>Edit</button>
+              <button>Remove</button>
+            </div>
+          </li>
         )}
       </li>
     </ul>

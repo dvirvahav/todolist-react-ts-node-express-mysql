@@ -1,7 +1,4 @@
 .taskContainer /* Parent */ {
-  /* display: grid;
-  position: relative;
-  grid-template-rows: 0.5fr 4fr 0.5fr; */
   background-color: rgba(255, 255, 255, 0.805);
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(52, 45, 233, 0.15);
@@ -20,7 +17,7 @@
 .completedTasks {
   text-align: center;
   padding: 20px;
-  font-size: large;
+
   background-color: var(--color-bg-secondary);
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(162, 159, 159, 0.15);
@@ -34,4 +31,20 @@
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 0;
+}
+.checkbox-round {
+  width: 1.3em;
+  height: 1.3em;
+  background-color: white;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.checkbox-round:checked {
+  background-color: rgb(224, 28, 28);
 }

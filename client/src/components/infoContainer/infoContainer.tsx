@@ -9,13 +9,15 @@ export const InfoContainer: FC = () => {
     <div className='infoContainer'>
       <h1 className='headline'>Info</h1>
       <div className='taskInfo'>
-        {
+        {currentTask ? (
           <InfoItem
-            key={`${currentTask.taskID}`}
+            key={currentTask.taskID}
             date={currentTask.info.date}
             dueDate={currentTask.info.dueDate}
           />
-        }
+        ) : (
+          <div>Loading...</div>
+        )}
       </div>
     </div>
   );

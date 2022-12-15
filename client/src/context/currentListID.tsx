@@ -1,9 +1,9 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, Context } from 'react';
 import { currentListID } from '../types/types';
 
 export const useCurrentListIDContext = () => useContext(CurrentListIDContext);
 
-export const CurrentListIDContext: React.Context<currentListID> =
+export const CurrentListIDContext: Context<currentListID> =
   createContext<currentListID>({
     currentListID: 0,
     setCurrentListID: () => {},

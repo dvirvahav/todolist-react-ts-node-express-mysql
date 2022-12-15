@@ -14,7 +14,7 @@ export type currentListState = {
 
 export type infoObject = {
   date: string;
-  dueDate: string | null;
+  dueDate?: string;
 };
 
 export type currentTask = {

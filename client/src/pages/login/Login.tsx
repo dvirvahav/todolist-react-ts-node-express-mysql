@@ -3,11 +3,12 @@ import { NavigateFunction, useNavigate } from 'react-router-dom';
 import Axios, { AxiosResponse } from 'axios';
 import { useUserContext } from '../../context/user';
 import { listObject, userObject } from '../../types/types';
-import { initiateNewList } from '../../components/listContainer/listContainer';
+
 import { initiateNewTask } from '../../components/taskContainer/taskContainer';
 import { useListContext } from '../../context/list';
 import { useCurrentListContext } from '../../context/currentList';
 import { alerts } from '../../utils/enums';
+import { useListLogic } from '../../components/listContainer/logic';
 
 export const Login: FC = () => {
   const [username, setUsername] = useState<string>('');
@@ -15,13 +16,18 @@ export const Login: FC = () => {
   const { setUser } = useUserContext();
   const { reloadNewList, clearList } = useListContext();
   const { clearCurrentList } = useCurrentListContext();
+  const { initiateNewList } = useListLogic();
   const navigate: NavigateFunction = useNavigate();
 
   const handleUserChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
+    setUsername(() => {
+      return event.target.value;
+    });
   };
   const handlePassChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
+    setPassword(() => {
+      return event.target.value;
+    });
   };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
@@ -52,8 +58,8 @@ export const Login: FC = () => {
           navigate('/home');
         }
       })
-      .catch(() => {
-        alert(alerts.connection);
+      .catch((error) => {
+        alert(error);
       });
   };
 

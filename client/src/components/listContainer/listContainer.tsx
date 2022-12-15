@@ -1,45 +1,10 @@
+import { FC } from 'react';
 import { ListItem } from './listItem';
 
-import { ChangeEvent, useState, FormEvent, FC } from 'react';
-import { listObject, taskObject } from '../../types/types';
-import { useCurrentListContext } from '../../context/currentList';
-import { useListContext } from '../../context/list';
-
-import { useCurrentListIDContext } from '../../context/currentListID';
-import Axios from 'axios';
-import { useUserContext } from '../../context/user';
+import { useListLogic } from './logic';
 
 export const ListContainer: FC = () => {
-  const [input, setInput] = useState<string>('');
-  const { setCurrentList } = useCurrentListContext();
-  const { lists, addNewList } = useListContext();
-  const { setCurrentListID } = useCurrentListIDContext();
-  const { profile } = useUserContext();
-
-  const handleSubmit = (event: FormEvent): void => {
-    event.preventDefault();
-    let newList: listObject = {} as listObject;
-
-    Axios.post('/api/insertList', {
-      listName: input,
-      username: profile.username,
-    }).then((response) => {
-      if (response.data === 'Error') {
-        alert('Something went wrong, list not saved in db');
-      } else {
-        setCurrentListID(response.data[0]['id']);
-        newList = initiateNewList(response.data[0]['id'], input);
-        setCurrentList(newList.pendingTasks);
-        addNewList(newList);
-      }
-    });
-
-    setInput('');
-  };
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInput(event.target.value);
-  };
+  const { handleChange, handleSubmit, lists, input } = useListLogic();
 
   return (
     <div className='listContainer'>
@@ -71,16 +36,3 @@ export const ListContainer: FC = () => {
     </div>
   );
 };
-
-// This function help to create new list
-export function initiateNewList(serial: number, input: string): listObject {
-  let newListItem: listObject = {
-    listID: serial,
-    listName: input,
-    completedTasks: [] as taskObject[],
-    pendingTasks: [] as taskObject[],
-    isActive: false,
-  };
-
-  return newListItem;
-}
