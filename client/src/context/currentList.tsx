@@ -13,6 +13,7 @@ export const CurrentListContext: Context<currentListState> =
     currentList: [],
     clearCurrentList: () => {},
     setCurrentList: () => {},
+    setActiveTask: () => {},
   });
 
 export function CurrentListContextProvider({
@@ -22,9 +23,21 @@ export function CurrentListContextProvider({
 }) {
   const [currentList, setCurrentList] = useState<taskObject[]>([]);
   const clearCurrentList = useCallback(() => setCurrentList([]), []);
+  const setActiveTask = useCallback(
+    (itemID: number) =>
+      setCurrentList(
+        currentList.map((item: taskObject) => {
+          if (item.taskID === itemID) {
+            item.isActive = true;
+          } else item.isActive = false;
+          return item;
+        })
+      ),
+    [currentList]
+  );
   return (
     <CurrentListContext.Provider
-      value={{ currentList, setCurrentList, clearCurrentList }}>
+      value={{ currentList, setCurrentList, clearCurrentList, setActiveTask }}>
       {children}
     </CurrentListContext.Provider>
   );

@@ -61,15 +61,10 @@
 
 .item:hover {
   transform: scale(0.98);
-  background-color: #78727215;
-
-  z-index: 1; /* optional */
 }
 
-/* Case task was selected */
-.active {
-  transform: scale(1.02);
-  background-color: #78727215;
+.activeList, .activeTask {
+  transform: scale(0.98);
 }
 input {
   border: none;

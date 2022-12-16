@@ -9,6 +9,7 @@ export const taskTemp: taskObject = {
     dueDate: undefined,
   },
   status: 0,
+  isActive: false,
 };
 export const CurrentTaskContext: Context<currentTask> =
   createContext<currentTask>({

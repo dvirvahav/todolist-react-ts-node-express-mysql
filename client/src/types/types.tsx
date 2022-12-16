@@ -11,6 +11,7 @@ export type currentListState = {
   currentList: taskObject[];
   setCurrentList: (currentList: taskObject[]) => void;
   clearCurrentList: () => void;
+  setActiveTask: (taskID: number) => void;
 };
 
 export type infoObject = {
@@ -29,6 +30,7 @@ export type taskObject = {
   taskName: string;
   info: infoObject;
   status: number;
+  isActive: boolean;
 };
 export type currentListID = {
   currentListID: number;

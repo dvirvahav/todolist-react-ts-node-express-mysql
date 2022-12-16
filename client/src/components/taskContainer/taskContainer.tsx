@@ -67,7 +67,6 @@ export const TaskContainer: FC = () => {
       </text>
       <br /> <br />
       <div className='allLists'>
-        <i className='ti ti-brand-tabler'></i>
         <ul className='pendingTaskList'>
           {currentList.map((item, idx) => (
             <TaskItem
@@ -75,6 +74,7 @@ export const TaskContainer: FC = () => {
               itemInput={item.taskName}
               itemID={item.taskID}
               itemStatus={item.status}
+              isActive={item.isActive}
             />
           ))}
         </ul>
@@ -104,6 +104,7 @@ export function initiateNewTask(serial: number, input: string): taskObject {
     taskName: input,
     info: newInfoForTask,
     status: 0,
+    isActive: false,
   };
 
   return newTaskItem;

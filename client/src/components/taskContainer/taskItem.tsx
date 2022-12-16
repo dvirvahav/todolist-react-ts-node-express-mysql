@@ -9,10 +9,11 @@ export const TaskItem: FC<{
   itemInput: string;
   itemID: number;
   itemStatus: number;
-}> = ({ itemInput, itemID, itemStatus }) => {
+  isActive: boolean;
+}> = ({ itemInput, itemID, itemStatus, isActive }) => {
   const { currentListID } = useCurrentListIDContext();
   const { lists } = useListContext();
-  const { setCurrentList } = useCurrentListContext();
+  const { setCurrentList, setActiveTask } = useCurrentListContext();
   const { setCurrentTask } = useCurrentTaskContext();
   const [input, setInput] = useState<string>(itemInput);
   const [buttonInput, setButtonInput] = useState<string>('Edit');
@@ -92,6 +93,7 @@ export const TaskItem: FC<{
 
   const handleClick = () => {
     setIsHidden(false);
+    setActiveTask(itemID);
     lists.forEach((item) => {
       if (item.listID === currentListID) {
         if (itemStatus) {
@@ -108,7 +110,10 @@ export const TaskItem: FC<{
   };
 
   return (
-    <li className='taskItem item' id={'task' + itemID} onClick={handleClick}>
+    <li
+      className={isActive ? 'taskItem item activeTask' : 'taskItem item'}
+      id={'task' + itemID}
+      onClick={handleClick}>
       <input
         type='text'
         value={input}
