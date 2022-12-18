@@ -84,10 +84,10 @@ export const Login: FC = () => {
 
   const loadData = (response: AxiosResponse) => {
     const userLists: listObject[] = [];
-    let i,
+    var i,
       j = 0;
     for (i = 0; i < response.data[0].length; i++) {
-      let currentListID: number = response.data[0][i]['id'];
+      let currentListID = response.data[0][i]['id'];
       let newList: listObject = initiateNewList(
         currentListID,
         response.data[0][i]['name']

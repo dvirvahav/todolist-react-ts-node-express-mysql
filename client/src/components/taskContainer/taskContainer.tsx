@@ -59,13 +59,13 @@ export const TaskContainer: FC = () => {
   };
 
   return (
-    <div className='taskContainer ${}'>
+    <div className='taskContainer'>
       <text className='headline'>
         {lists.map((item) => {
           if (item.listID === currentListID) return item.listName;
         })}
       </text>
-      <br /> <br />
+      <br />
       <div className='allLists'>
         <ul className='pendingTaskList'>
           {currentList.map((item, idx) => (

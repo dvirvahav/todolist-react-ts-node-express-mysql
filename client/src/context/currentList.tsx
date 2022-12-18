@@ -28,7 +28,7 @@ export function CurrentListContextProvider({
       setCurrentList(
         currentList.map((item: taskObject) => {
           if (item.taskID === itemID) {
-            item.isActive = true;
+            item.isActive = !item.isActive;
           } else item.isActive = false;
           return item;
         })

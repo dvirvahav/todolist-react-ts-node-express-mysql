@@ -3,27 +3,20 @@
 @import url('./components/listContainer/listContainer.css');
 @import url('./pages/login/login.css');
 * {
-  font-family: 'Helvetica';
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: inherit;
+  font-weight: inherit;
+  letter-spacing: -0.2px;
 }
-
+body {
+  background-color: #f4f2f2;
+  margin: 0;
+  padding: 0;
+  color: rgba(92, 89, 89, 0.864);
+}
 /* width */
 ::-webkit-scrollbar {
   display: none;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: rgb(178, 173, 173);
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(223, 217, 217);
 }
 
 .headline {
@@ -46,6 +39,7 @@
 }
 
 .item {
+  box-shadow: -2px 1px 1px 1px rgba(232, 232, 239, 0.951);
   cursor: pointer;
   height: 30px;
   font-size: 13px;
@@ -54,23 +48,22 @@
   position: relative;
   margin-bottom: 5px;
   border-radius: 5px;
-  background-color: rgba(213, 213, 219, 0.951);
-  background-color: var(--color-bg-secondary);
-  box-shadow: 1px 1px 1px 1px rgba(213, 213, 219, 0.951);
 }
 
 .item:hover {
-  transform: scale(0.98);
+  font-weight: 700;
 }
 
-.activeList, .activeTask {
-  transform: scale(0.98);
+.activeList,
+.activeTask {
+  font-weight: 700;
 }
 input {
   border: none;
   background: none;
   padding: 5px;
   cursor: inherit;
+  color: inherit;
 }
 
 input:focus {
@@ -83,6 +76,7 @@ input:focus {
   right: 5px;
   bottom: 5px;
   padding: 2px;
+  color: inherit;
 }
 
 .formAdd {

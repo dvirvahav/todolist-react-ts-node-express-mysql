@@ -89,7 +89,7 @@ export const ListItem: FC<{
 
   return (
     <li
-      className={isActive ? 'item active' : 'item'}
+      className={isActive ? 'activeList itemList' : 'itemList'}
       id={'list' + itemID}
       onClick={handleSetList}>
       <input
@@ -100,9 +100,9 @@ export const ListItem: FC<{
         onChange={(event) => setInput(event.target.value)}
       />
 
-      <div className='buttonsGrid '>
+      <div className='buttonsGrid'>
         <button onClick={handleSave}>{buttonInput}</button>
-        <button onClick={handleRemove}>Remove</button>
+        <button onClick={handleRemove}>R</button>
       </div>
     </li>
   );

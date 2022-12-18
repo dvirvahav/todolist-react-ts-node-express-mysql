@@ -1,21 +1,19 @@
 @media screen and (min-width: 1200px) {
   .Home {
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 0.7fr 2fr 1fr;
   }
   .HomeNoTask {
-    grid-template-columns: 1fr 3fr 0fr;
+    grid-template-columns: 0.7fr 3fr 0fr;
   }
 }
 
 .Home {
-  margin-top: 10px;
   display: grid;
   height: 100%;
   width: 100%;
   gap: 0.5em;
 }
 .HomeNoTask {
-  margin-top: 10px;
   background-color: none;
   display: grid;
   height: 100%;

@@ -111,7 +111,7 @@ export const TaskItem: FC<{
 
   return (
     <li
-      className={isActive ? 'taskItem item activeTask' : 'taskItem item'}
+      className={isActive ? 'taskItem item activeTask ' : 'taskItem item'}
       id={'task' + itemID}
       onClick={handleClick}>
       <input

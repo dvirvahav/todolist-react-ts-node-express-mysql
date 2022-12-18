@@ -1,8 +1,43 @@
 .listContainer {
   grid-template-rows: 0.5fr 4fr 0.1fr;
-  border-radius: 10px;
+  box-shadow: 0px 0px 5px 2px rgb(115, 115, 233);
   display: grid;
   position: relative;
-  background-color: rgba(253, 253, 253, 0.897);
   padding-top: 5px;
+  font-size: 14px;
+  background: #3c67cd; /* fallback for old browsers */
+}
+
+.itemList {
+  cursor: pointer;
+  height: 30px;
+  color: white;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  margin-bottom: 5px;
+}
+
+.formAddList {
+  font-size: 13px;
+  height: 30px;
+  color: white;
+  background-color: inherit;
+}
+
+.inputList::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 1; /* Firefox */
+}
+
+.inputList:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: white;
+}
+
+.inputList::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: white;
 }

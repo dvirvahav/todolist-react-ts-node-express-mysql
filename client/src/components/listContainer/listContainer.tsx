@@ -18,9 +18,10 @@ export const ListContainer: FC = () => {
           />
         ))}
       </ul>
-      <form className='formAddList' onSubmit={handleSubmit}>
+      <form className='formAddList ' onSubmit={handleSubmit}>
         <button>+</button>
         <input
+          className='inputList'
           type='text'
           placeholder='New list'
           maxLength={20}
