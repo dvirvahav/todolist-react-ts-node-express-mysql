@@ -1,22 +1,17 @@
-import { FC } from 'react';
-import { useCurrentTaskContext } from '../../context/currentTask';
+import { useGeneralLogic } from '../allContexts';
 import { InfoItem } from './infoItem';
+import { FC } from 'react';
 
 export const InfoContainer: FC = () => {
-  const { currentTask } = useCurrentTaskContext();
-
+  const { currentTask, currentList } = useGeneralLogic();
   return currentTask.info.date === '' ? (
     <div className='empty-container'></div>
   ) : (
     <div className='infoContainer'>
-      {currentTask ? (
-        <InfoItem
-          key={currentTask.taskID}
-          date={currentTask.info.date}
-          dueDate={currentTask.info.dueDate}
-        />
-      ) : (
-        <div>Loading...</div>
+      {currentList.map((item) =>
+        item.taskID === currentTask.taskID ? (
+          <InfoItem key={currentTask.taskID} />
+        ) : null
       )}
     </div>
   );

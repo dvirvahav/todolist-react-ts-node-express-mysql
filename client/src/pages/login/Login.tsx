@@ -4,11 +4,11 @@ import Axios, { AxiosResponse } from 'axios';
 import { useUserContext } from '../../context/user';
 import { listObject, userObject } from '../../types/types';
 
-import { initiateNewTask } from '../../components/taskContainer/taskContainer';
 import { useListContext } from '../../context/list';
 import { useCurrentListContext } from '../../context/currentList';
 import { alerts } from '../../utils/enums';
 import { useListLogic } from '../../components/listContainer/logic';
+import { useTaskLogic } from '../../components/taskContainer/logic';
 
 export const Login: FC = () => {
   const [username, setUsername] = useState<string>('');
@@ -17,6 +17,7 @@ export const Login: FC = () => {
   const { reloadNewList, clearList } = useListContext();
   const { clearCurrentList } = useCurrentListContext();
   const { initiateNewList } = useListLogic();
+  const { initiateNewTask } = useTaskLogic();
   const navigate: NavigateFunction = useNavigate();
 
   const handleUserChange = (event: ChangeEvent<HTMLInputElement>) => {

@@ -13,17 +13,25 @@ export type currentListState = {
   clearCurrentList: () => void;
   setActiveTask: (taskID: number) => void;
 };
-
+export type hyperlinkObject = {
+  title: string;
+  hyperlink: string;
+};
 export type infoObject = {
   date: string;
   dueDate?: string;
+  link?: hyperlinkObject;
 };
 
 export type currentTask = {
   currentTask: taskObject;
-  setCurrentTask: (currentTask: taskObject) => void;
   isHidden: boolean;
+  link?: hyperlinkObject;
+  dueDate?: string;
+  setCurrentTask: (currentTask: taskObject) => void;
   setIsHidden: (isHidden: boolean) => void;
+  setNewLink: (link: hyperlinkObject) => void;
+  setDueDate: (dueDate: string) => void;
 };
 export type taskObject = {
   taskID: number;

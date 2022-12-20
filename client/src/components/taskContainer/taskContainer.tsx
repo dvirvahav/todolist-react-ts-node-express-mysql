@@ -1,70 +1,20 @@
-import Axios from 'axios';
-import { ChangeEvent, FC, FormEvent, useState } from 'react';
-
-import { useCurrentListIDContext } from '../../context/currentListID';
-import { useCurrentListContext } from '../../context/currentList';
-import { useListContext } from '../../context/list';
-import { infoObject, taskObject } from '../../types/types';
+import { FC } from 'react';
+import { useTaskLogic } from './logic';
 import { TaskItem } from './taskItem';
 
 export const TaskContainer: FC = () => {
-  const { currentList, setCurrentList } = useCurrentListContext();
-  const { currentListID } = useCurrentListIDContext();
-  const { lists } = useListContext();
-  const [input, setInput] = useState<string>('');
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInput(() => {
-      return event.target.value;
-    });
-  };
-
-  const submit = (event: FormEvent): void => {
-    event.preventDefault();
-
-    Axios.post('/api/insertTask', {
-      listID: currentListID,
-      taskName: input,
-    })
-      .then((response) => {
-        if (response.data === 'Error') {
-          alert('Something went wrong, list not saved in db');
-        } else {
-          let newTask: taskObject = {} as taskObject;
-          lists.forEach(
-            (item: { listID: number; pendingTasks: taskObject[] }) => {
-              if (item.listID === currentListID) {
-                newTask = initiateNewTask(response.data[0]['id'], input);
-                item.pendingTasks.push(newTask);
-              }
-            }
-          );
-
-          // Set the list as current list
-          lists.forEach(
-            (item: { listID: number; pendingTasks: taskObject[] }) => {
-              if (item.listID === currentListID) {
-                setCurrentList(item.pendingTasks.slice());
-              }
-            }
-          );
-        }
-      })
-      .catch((error) => {
-        alert(error);
-      })
-      .finally(() => {
-        setInput('');
-      });
-  };
+  const { lists, currentListID, currentList, submit, handleChange, input } =
+    useTaskLogic();
 
   return (
     <div className='taskContainer'>
-      <text className='headline'>
-        {lists.map((item) => {
-          if (item.listID === currentListID) return item.listName;
-        })}
-      </text>
+      <div>
+        {lists.map((item) => (
+          <div key={item.listID} className='headline'>
+            {item.listID === currentListID ? item.listName : null}
+          </div>
+        ))}
+      </div>
       <br />
       <div className='allLists'>
         <ul className='pendingTaskList'>
@@ -94,18 +44,3 @@ export const TaskContainer: FC = () => {
     </div>
   );
 };
-
-export function initiateNewTask(serial: number, input: string): taskObject {
-  const newInfoForTask: infoObject = {
-    date: new Date().toLocaleString(),
-  };
-  const newTaskItem: taskObject = {
-    taskID: serial,
-    taskName: input,
-    info: newInfoForTask,
-    status: 0,
-    isActive: false,
-  };
-
-  return newTaskItem;
-}

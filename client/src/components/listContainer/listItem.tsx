@@ -1,25 +1,31 @@
 import Axios from 'axios';
 import { FC, useState } from 'react';
-import { useCurrentListContext } from '../../context/currentList';
-import { useCurrentListIDContext } from '../../context/currentListID';
-import { taskTemp, useCurrentTaskContext } from '../../context/currentTask';
 
-import { useListContext } from '../../context/list';
+import { taskTemp } from '../../context/currentTask';
+
 import { taskObject } from '../../types/types';
+import { useGeneralLogic } from '../allContexts';
 
 export const ListItem: FC<{
   itemInput: string;
   itemID: number;
   isActive: boolean;
 }> = ({ itemInput, itemID, isActive }) => {
-  const { setCurrentList } = useCurrentListContext();
-  const { lists, removeItem, setActiveItem } = useListContext();
-  const { currentListID, setCurrentListID } = useCurrentListIDContext();
+  const {
+    lists,
+    removeItem,
+    setIsHidden,
+    setCurrentTask,
+    setActiveItem,
+    setCurrentList,
+    currentListID,
+    setCurrentListID,
+  } = useGeneralLogic();
+
   const [buttonInput, setButtonInput] = useState<string>('Edit');
   const [readOnly, setReadOnly] = useState<boolean>(true);
   const [input, setInput] = useState<string>(itemInput);
-  const { setCurrentTask } = useCurrentTaskContext();
-  const { setIsHidden } = useCurrentTaskContext();
+
   const handleSetList = () => {
     setIsHidden(true);
     setCurrentListID(itemID);
@@ -58,14 +64,14 @@ export const ListItem: FC<{
     setReadOnly(() => {
       return !readOnly;
     });
-    if (!readOnly) {
+    if (readOnly) {
       setButtonInput(() => {
-        return 'Edit';
+        return 'Save';
       });
       return;
     } else
       setButtonInput(() => {
-        return 'Save';
+        return 'Edit';
       });
     Axios.post('/api/updateList', {
       listID: itemID,

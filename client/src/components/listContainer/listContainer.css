@@ -1,11 +1,11 @@
 .listContainer {
   grid-template-rows: 0.5fr 4fr 0.1fr;
-  box-shadow: 0px 0px 5px 2px rgb(115, 115, 233);
+  box-shadow: 0px 0px 5px 2px #3ccd76;
   display: grid;
   position: relative;
   padding-top: 5px;
   font-size: 14px;
-  background: #3c67cd; /* fallback for old browsers */
+  background: #3ccd76; /* fallback for old browsers */
 }
 
 .itemList {

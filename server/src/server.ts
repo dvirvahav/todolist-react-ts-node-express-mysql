@@ -12,6 +12,7 @@ import { signup } from './routes/signup';
 import { updateListName } from './routes/updateListName';
 import { updateTaskName } from './routes/updateTaskName';
 import { updateTaskStatus } from './routes/updateTaskStatus';
+import { insertTaskLink } from './routes/insertTaskLink';
 
 const app = Express();
 const serverPort: number = 5000;
@@ -27,6 +28,8 @@ app.use(Express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/api/updateTaskStatus', updateTaskStatus(mySQLDataBase));
+
+app.post('/api/insertTaskLink', insertTaskLink(mySQLDataBase));
 
 app.post('/api/getAllData', getAllData(mySQLDataBase));
 

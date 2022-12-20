@@ -1,17 +1,12 @@
 import { ChangeEvent, useState, FormEvent } from 'react';
-import { useCurrentListContext } from '../../context/currentList';
-import { useListContext } from '../../context/list';
-import { useCurrentListIDContext } from '../../context/currentListID';
 import Axios from 'axios';
-import { useUserContext } from '../../context/user';
 import { listObject, taskObject } from '../../types/types';
+import { useGeneralLogic } from '../allContexts';
 
 export const useListLogic = () => {
   const [input, setInput] = useState<string>('');
-  const { setCurrentList } = useCurrentListContext();
-  const { lists, addNewList } = useListContext();
-  const { setCurrentListID } = useCurrentListIDContext();
-  const { profile } = useUserContext();
+  const { setCurrentList, lists, addNewList, setCurrentListID, profile } =
+    useGeneralLogic();
 
   function initiateNewList(serial: number, input: string): listObject {
     let newListItem: listObject = {
