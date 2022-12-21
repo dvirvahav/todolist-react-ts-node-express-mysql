@@ -1,24 +1,25 @@
 import { Request, Response } from 'express';
-import { Connection, FieldInfo, MysqlError } from 'mysql';
+import { Pool } from 'mysql2';
+import { QueryError, RowDataPacket } from 'mysql2/promise';
 
 export const getAllData =
-  (mySQLDataBase: Connection) => (request: Request, response: Response) => {
+  (mySQLDataBase: Pool) => (request: Request, response: Response) => {
     const username: string = request.body.username;
     const sqlAllData: string = `select id, name from lists where username=?;`;
 
-    mySQLDataBase.query(
+    mySQLDataBase.execute(
       sqlAllData,
       [username],
-      (error: MysqlError | null, userLists: FieldInfo[]): void => {
+      (error: QueryError | null, userLists: RowDataPacket[]): void => {
         if (error) {
           response.send('Error');
           console.log(error);
         } else {
-          mySQLDataBase.query(
+          mySQLDataBase.execute(
             `Select lists.id as "listID",tasks.id as "taskID",tasks.name as "taskName", tasks.status,  DATE_FORMAT(tasks.date, '%m/%d/%Y, %r') as date, DATE_FORMAT(tasks.due_date, '%m/%d/%Y, %r') as dueDate from lists,tasks where username=? and lists.id=tasks.list_id order by listID
           `,
             [username],
-            (error: MysqlError | null, userTasks: FieldInfo[]): void => {
+            (error: QueryError | null, userTasks: RowDataPacket[]): void => {
               if (error) {
                 response.send('Error');
                 console.log(error);

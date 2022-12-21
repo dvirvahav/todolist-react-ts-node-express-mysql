@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import { Connection, FieldInfo, MysqlError } from 'mysql';
+import { Pool } from 'mysql2';
+import { QueryError } from 'mysql2/typings/mysql/lib/protocol/sequences/Query';
 
 export const signup =
-  (mySQLDataBase: Connection) => (request: Request, response: Response) => {
+  (mySQLDataBase: Pool) => (request: Request, response: Response) => {
     const username: string = request.body.username;
     const mail: string = request.body.mail;
     const firstName: string = request.body.firstName;
@@ -11,10 +12,10 @@ export const signup =
     const sqlInsert: string = `INSERT INTO users (username, mail, first, last, password) VALUES
    (?,?,?,?,?)`;
 
-    mySQLDataBase.query(
+    mySQLDataBase.execute(
       sqlInsert,
       [username, mail, firstName, lastName, password],
-      (error: MysqlError | null): void => {
+      (error: QueryError | null): void => {
         if (error) response.send('Error');
         else response.send('Success');
       }

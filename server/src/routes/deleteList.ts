@@ -1,24 +1,24 @@
 import { Request, Response } from 'express';
-import { Connection, MysqlError } from 'mysql';
-
+import { Pool } from 'mysql2';
+import { QueryError } from 'mysql2/promise';
 export const deleteList =
-  (mySQLDataBase: Connection) => (request: Request, response: Response) => {
+  (mySQLDataBase: Pool) => (request: Request, response: Response) => {
     const listID: string = request.body.listID;
     const sqlDeleteTasks: string = `DELETE from tasks where list_id=?;`;
     const sqlDeleteList: string = `DELETE from lists where id=?;`;
 
-    mySQLDataBase.query(
+    mySQLDataBase.execute(
       sqlDeleteTasks,
       [listID],
-      (error: MysqlError | null): void => {
+      (error: QueryError | null): void => {
         if (error) {
           response.send('Error');
           console.log(error);
         } else {
-          mySQLDataBase.query(
+          mySQLDataBase.execute(
             sqlDeleteList,
             [listID],
-            (error: MysqlError | null): void => {
+            (error: QueryError | null): void => {
               if (error) {
                 response.send('Error');
                 console.log(error);

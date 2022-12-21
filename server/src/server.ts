@@ -1,5 +1,4 @@
 import cors from 'cors';
-import { Connection, createConnection } from 'mysql';
 import Express from 'express';
 import bodyParser from 'body-parser';
 import { getAllData } from './routes/getAllData';
@@ -14,14 +13,18 @@ import { updateTaskName } from './routes/updateTaskName';
 import { updateTaskStatus } from './routes/updateTaskStatus';
 import { insertTaskLink } from './routes/insertTaskLink';
 import { insertTaskDueDate } from './routes/insertTasDueDate';
+import { createPool, Pool } from 'mysql2';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = Express();
 const serverPort: number = 5000;
-const mySQLDataBase: Connection = createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
-  database: 'todolist',
+const mySQLDataBase: Pool = createPool({
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
 });
 
 app.use(cors());

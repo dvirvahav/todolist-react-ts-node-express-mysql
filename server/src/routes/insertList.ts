@@ -1,25 +1,26 @@
 import { Request, Response } from 'express';
-import { Connection, FieldInfo, MysqlError } from 'mysql';
+import { Pool } from 'mysql2';
+import { QueryError, RowDataPacket } from 'mysql2/promise';
 
 export const insertList =
-  (mySQLDataBase: Connection) => (request: Request, response: Response) => {
+  (mySQLDataBase: Pool) => (request: Request, response: Response) => {
     const listName: string = request.body.listName;
     const username: string = request.body.username;
     const sqlInsertList: string = `INSERT INTO lists (username,name) VALUES
     (?,?)`;
 
-    mySQLDataBase.query(
+    mySQLDataBase.execute(
       sqlInsertList,
       [username, listName],
-      (error: MysqlError | null): void => {
+      (error: QueryError | null): void => {
         if (error) {
           response.send('Error');
           console.log(error);
         } else {
-          mySQLDataBase.query(
+          mySQLDataBase.execute(
             'SELECT max(id) as id from lists where username=?',
             username,
-            (error: MysqlError | null, result: FieldInfo[]): void => {
+            (error: QueryError | null, result: RowDataPacket[]): void => {
               if (error) {
                 response.send('Error');
                 console.log(error);

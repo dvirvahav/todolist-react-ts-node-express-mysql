@@ -12,6 +12,7 @@ export const ListItem: FC<{
   isActive: boolean;
 }> = ({ itemInput, itemID, isActive }) => {
   const {
+    profile,
     lists,
     removeItem,
     setIsHidden,

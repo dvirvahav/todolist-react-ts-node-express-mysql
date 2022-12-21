@@ -1,25 +1,27 @@
 import { Request, Response } from 'express';
-import { Connection, MysqlError } from 'mysql';
+import { Pool } from 'mysql2';
+import { QueryError } from 'mysql2/promise';
 
 export const deleteTask =
-  (mySQLDataBase: Connection) => (request: Request, response: Response) => {
+  (mySQLDataBase: Pool) => (request: Request, response: Response) => {
     const taskID: string = request.body.taskID;
     const sqlDeleteTask: string = `DELETE from tasks where id=?;`;
     const sqlDeleteTaskHyperlinks: string =
       'DELETE from hyperlinks where taskID=?;';
-    mySQLDataBase.query(
+
+    mySQLDataBase.execute(
       sqlDeleteTaskHyperlinks,
       [taskID],
-      (error: MysqlError | null): void => {
+      (error: QueryError | null): void => {
         if (error) {
           response.send('Error');
           console.log(error);
         } else {
           response.send('OK');
-          mySQLDataBase.query(
+          mySQLDataBase.execute(
             sqlDeleteTask,
             [taskID],
-            (error: MysqlError | null): void => {
+            (error: QueryError | null): void => {
               if (error) {
                 response.send('Error');
                 console.log(error);

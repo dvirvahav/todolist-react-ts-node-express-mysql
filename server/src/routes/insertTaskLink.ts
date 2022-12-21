@@ -1,18 +1,19 @@
 import { Request, Response } from 'express';
-import { Connection, MysqlError } from 'mysql';
+import { Pool } from 'mysql2';
+import { QueryError } from 'mysql2/typings/mysql/lib/protocol/sequences/Query';
 
 export const insertTaskLink =
-  (mySQLDataBase: Connection) => (request: Request, response: Response) => {
+  (mySQLDataBase: Pool) => (request: Request, response: Response) => {
     const taskID: string = request.body.taskID;
     const hyperlink: string = request.body.hyperlink;
     const title: string = request.body.title;
 
     const sqlInsertTaskHyperlink: string = `INSERT INTO hyperlinks (taskID,title,hyperlink) VALUES (?,?,?)`;
 
-    mySQLDataBase.query(
+    mySQLDataBase.execute(
       sqlInsertTaskHyperlink,
       [taskID, title, hyperlink],
-      (error: MysqlError | null): void => {
+      (error: QueryError | null): void => {
         if (error) {
           response.send('Error');
           console.log(error);

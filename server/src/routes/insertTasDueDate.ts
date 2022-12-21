@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import { Connection, MysqlError } from 'mysql';
+import { Pool } from 'mysql2';
+import { QueryError } from 'mysql2/promise';
 
 export const insertTaskDueDate =
-  (mySQLDataBase: Connection) => (request: Request, response: Response) => {
+  (mySQLDataBase: Pool) => (request: Request, response: Response) => {
     const taskID: string = request.body.taskID;
     const dueDate: string = request.body.dueDate;
 
@@ -10,10 +11,10 @@ export const insertTaskDueDate =
     SET due_date=?
     WHERE id=?;`;
 
-    mySQLDataBase.query(
+    mySQLDataBase.execute(
       sqlInsertTaskHyperlink,
       [dueDate, taskID],
-      (error: MysqlError | null): void => {
+      (error: QueryError | null): void => {
         if (error) {
           response.send('Error');
           console.log(error);

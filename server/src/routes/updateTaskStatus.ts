@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import { Connection, MysqlError } from 'mysql';
+import { Pool } from 'mysql2';
+import { QueryError } from 'mysql2/typings/mysql/lib/protocol/sequences/Query';
 
 export const updateTaskStatus =
-  (mySQLDataBase: Connection) => (request: Request, response: Response) => {
+  (mySQLDataBase: Pool) => (request: Request, response: Response) => {
     const taskID: string = request.body.taskID;
     const itemStatus: string = request.body.itemStatus;
     const sqlDeleteTask: string = `UPDATE tasks
@@ -11,10 +12,10 @@ export const updateTaskStatus =
     WHERE
         id = ?;`;
 
-    mySQLDataBase.query(
+    mySQLDataBase.execute(
       sqlDeleteTask,
       [itemStatus, taskID],
-      (error: MysqlError | null): void => {
+      (error: QueryError | null): void => {
         if (error) {
           response.send('Error');
           console.log(error);
