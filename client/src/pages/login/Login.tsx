@@ -98,9 +98,13 @@ export const Login: FC = () => {
         if (response.data[1][j]['listID'] === currentListID) {
           let newTask = initiateNewTask(
             response.data[1][j]['taskID'],
-            response.data[1][j]['taskName']
+            response.data[1][j]['taskName'],
+            response.data[1][j]['date'],
+            response.data[1][j]['dueDate'] === null
+              ? undefined
+              : response.data[1][j]['dueDate']
           );
-          newTask.info.date = response.data[1][j]['date'];
+
           if (response.data[1][j]['status'])
             userLists[i].completedTasks.push(newTask);
           else userLists[i].pendingTasks.push(newTask);

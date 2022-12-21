@@ -15,7 +15,7 @@ export const getAllData =
           console.log(error);
         } else {
           mySQLDataBase.query(
-            `Select lists.id as "listID",tasks.id as "taskID",tasks.name as "taskName", tasks.status,  DATE_FORMAT(tasks.date, '%m/%d/%Y, %r') as date from lists,tasks where username=? and lists.id=tasks.list_id order by listID
+            `Select lists.id as "listID",tasks.id as "taskID",tasks.name as "taskName", tasks.status,  DATE_FORMAT(tasks.date, '%m/%d/%Y, %r') as date, DATE_FORMAT(tasks.due_date, '%m/%d/%Y, %r') as dueDate from lists,tasks where username=? and lists.id=tasks.list_id order by listID
           `,
             [username],
             (error: MysqlError | null, userTasks: FieldInfo[]): void => {

@@ -33,7 +33,11 @@ export const useTaskLogic = () => {
           lists.forEach(
             (item: { listID: number; pendingTasks: taskObject[] }) => {
               if (item.listID === currentListID) {
-                newTask = initiateNewTask(response.data[0]['id'], input);
+                newTask = initiateNewTask(
+                  response.data[0]['id'],
+                  input,
+                  new Date().toLocaleString()
+                );
                 item.pendingTasks.push(newTask);
               }
             }
@@ -57,12 +61,19 @@ export const useTaskLogic = () => {
       });
   };
 
-  function initiateNewTask(serial: number, input: string): taskObject {
+  function initiateNewTask(
+    id: number,
+    input: string,
+    date: string,
+    dueDate?: string
+  ): taskObject {
     const newInfoForTask: infoObject = {
-      date: new Date().toLocaleString(),
+      date: date,
+      dueDate: dueDate,
     };
+
     const newTaskItem: taskObject = {
-      taskID: serial,
+      taskID: id,
       taskName: input,
       info: newInfoForTask,
       status: 0,
