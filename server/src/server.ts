@@ -2,29 +2,26 @@ import cors from 'cors';
 import Express from 'express';
 import bodyParser from 'body-parser';
 import { getAllData } from './routes/getAllData';
-import { insertList } from './routes/insertList';
-import { insertTask } from './routes/InsertTask';
-import { login } from './routes/login';
-import { deleteList } from './routes/deleteList';
-import { deleteTask } from './routes/deleteTask';
-import { signup } from './routes/signup';
-import { updateListName } from './routes/updateListName';
-import { updateTaskName } from './routes/updateTaskName';
-import { updateTaskStatus } from './routes/updateTaskStatus';
-import { insertTaskLink } from './routes/insertTaskLink';
-import { insertTaskDueDate } from './routes/insertTasDueDate';
-import { createPool, Pool } from 'mysql2';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import { insertList } from './routes/listController/insertList';
+import { insertTask } from './routes/taskController/InsertTask';
+import { login } from './routes/generalController/login';
+import { deleteList } from './routes/listController/deleteList';
+import { deleteTask } from './routes/taskController/deleteTask';
+import { signup } from './routes/generalController/signup';
+import { updateListName } from './routes/listController/updateListName';
+import { updateTaskName } from './routes/taskController/updateTaskName';
+import { updateTaskStatus } from './routes/taskController/updateTaskStatus';
+import { insertTaskLink } from './routes/taskController/insertTaskLink';
+import { insertTaskDueDate } from './routes/taskController/insertTaskDueDate';
+import { Connection, createConnection } from 'mysql';
 
 const app = Express();
 const serverPort: number = 5000;
-const mySQLDataBase: Pool = createPool({
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE,
+const mySQLDataBase: Connection = createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'password',
+  database: 'todolist',
 });
 
 app.use(cors());

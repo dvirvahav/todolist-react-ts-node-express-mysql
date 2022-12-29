@@ -1,0 +1,91 @@
+.tasksList {
+  box-shadow: rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem;
+  opacity: 1;
+  border-radius: 1.5em;
+  cursor: pointer;
+  list-style: none;
+  height: 500px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 10px;
+}
+
+.formAdd {
+  font-size: 13px;
+  height: 50x;
+}
+.formAdd button {
+  top: 5px;
+  position: relative;
+}
+.taskItem {
+  box-shadow: rgba(222, 214, 214, 0.05) 0rem 1.25rem 1.6875rem;
+  cursor: pointer;
+
+  height: 30px;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  transition: 0.6s;
+}
+.inputTask {
+  position: absolute;
+  left: 25px;
+  border: none;
+  background: none;
+  padding: 5px;
+  color: inherit;
+  cursor: pointer;
+}
+.taskItem:hover,
+.activeTask {
+  transform: scale(1.01);
+  background-color: #f2f2f2;
+  font-weight: 700;
+  opacity: 1;
+}
+
+.checkbox-round {
+  width: 1.3em;
+  height: 1.3em;
+  background-color: white;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.checkbox-round:checked {
+  background-color: rgb(89, 224, 150);
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+li:hover .dropdown {
+  display: block;
+}
+
+.dropdown a {
+  display: block;
+  padding: 0.5em;
+}
+
+.dropdown a:hover {
+  background: rgb(231, 221, 221);
+  opacity: 0.5;
+}
+
+.fa {
+  margin-right: 0.5em;
+}

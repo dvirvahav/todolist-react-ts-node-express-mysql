@@ -20,7 +20,7 @@ export const DueDate: FC = () => {
 
   return (
     <div>
-      <li className='taskItem item'>
+      <li className='infoItem'>
         {currentTask.info.dueDate === undefined ? (
           <button onClick={() => setDueDatePopup(true)}>Add due date</button>
         ) : (
@@ -30,7 +30,7 @@ export const DueDate: FC = () => {
       {NewDuedatePopup && (
         <div className='popup'>
           <input
-            type='date'
+            type='datetime-local'
             onChange={(event) => {
               setDueDateInput(event.target.value);
             }}

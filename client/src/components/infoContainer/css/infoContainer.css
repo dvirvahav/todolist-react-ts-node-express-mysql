@@ -1,0 +1,19 @@
+.infoContainer {
+  border-radius: 10px;
+  display: grid;
+}
+
+.empty-container {
+  display: none;
+}
+
+.infoItem {
+  border-bottom: 0.2rem solid rgba(234, 222, 222, 0.628);
+  height: 30px;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}

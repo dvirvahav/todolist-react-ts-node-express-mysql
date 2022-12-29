@@ -5,9 +5,9 @@ import {
   Context,
   useCallback,
 } from 'react';
-import { currentTask, hyperlinkObject, taskObject } from '../types/types';
+import { currentTask, hyperLink, note, task } from '../types/types';
 
-export const taskTemp: taskObject = {
+export const taskTemp: task = {
   taskID: 0,
   taskName: '',
   info: {
@@ -23,10 +23,12 @@ export const CurrentTaskContext: Context<currentTask> =
     isHidden: false,
     link: undefined,
     dueDate: undefined,
+    note: undefined,
     setCurrentTask: () => {},
     setIsHidden: () => {},
     setNewLink: () => {},
     setDueDate: () => {},
+    setNewNote: () => {},
   });
 
 export const useCurrentTaskContext = () => useContext(CurrentTaskContext);
@@ -36,19 +38,32 @@ export function CurrentTaskContextProvider({
 }: {
   children: JSX.Element;
 }) {
-  const [currentTask, setCurrentTask] = useState<taskObject>(taskTemp);
+  const [currentTask, setCurrentTask] = useState<task>(taskTemp);
   const [isHidden, setIsHidden] = useState(false);
-
+  const setNewNote = useCallback(
+    (note: note) => {
+      setCurrentTask({
+        ...currentTask,
+        info: { ...currentTask.info, note: note },
+      });
+    },
+    [currentTask]
+  );
   const setNewLink = useCallback(
-    (link: hyperlinkObject) => {
-      const newHyperlink: hyperlinkObject = link;
-      currentTask.info.link = newHyperlink;
+    (link: hyperLink) => {
+      setCurrentTask({
+        ...currentTask,
+        info: { ...currentTask.info, link: link },
+      });
     },
     [currentTask]
   );
   const setDueDate = useCallback(
     (dueDate: string) => {
-      currentTask.info.dueDate = dueDate;
+      setCurrentTask({
+        ...currentTask,
+        info: { ...currentTask.info, dueDate: dueDate },
+      });
     },
     [currentTask]
   );
@@ -61,6 +76,7 @@ export function CurrentTaskContextProvider({
         setIsHidden,
         setNewLink,
         setDueDate,
+        setNewNote,
       }}>
       {children}
     </CurrentTaskContext.Provider>

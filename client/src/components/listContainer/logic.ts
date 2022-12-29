@@ -1,6 +1,6 @@
 import { ChangeEvent, useState, FormEvent } from 'react';
 import Axios from 'axios';
-import { listObject, taskObject } from '../../types/types';
+import { list, task } from '../../types/types';
 import { useGeneralLogic } from '../allContexts';
 
 export const useListLogic = () => {
@@ -8,12 +8,11 @@ export const useListLogic = () => {
   const { setCurrentList, lists, addNewList, setCurrentListID, profile } =
     useGeneralLogic();
 
-  function initiateNewList(serial: number, input: string): listObject {
-    let newListItem: listObject = {
+  function initiateNewList(serial: number, input: string): list {
+    let newListItem: list = {
       listID: serial,
       listName: input,
-      completedTasks: [] as taskObject[],
-      pendingTasks: [] as taskObject[],
+      tasks: [] as task[],
       isActive: false,
     };
 
@@ -21,7 +20,7 @@ export const useListLogic = () => {
   }
   const handleSubmit = (event: FormEvent): void => {
     event.preventDefault();
-    let newList: listObject = {} as listObject;
+    let newList: list = {} as list;
 
     Axios.post('/api/insertList', {
       listName: input,
@@ -33,7 +32,7 @@ export const useListLogic = () => {
         } else {
           setCurrentListID(response.data[0]['id']);
           newList = initiateNewList(response.data[0]['id'], input);
-          setCurrentList(newList.pendingTasks);
+          setCurrentList(newList.tasks);
           addNewList(newList);
         }
       })

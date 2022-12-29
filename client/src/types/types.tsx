@@ -1,42 +1,51 @@
-export type listsContextProps = {
-  addNewList: (newList: listObject) => void;
+export type ListState = {
+  addNewList: (newList: list) => void;
   removeItem: (listID: number) => void;
   clearList: () => void;
-  reloadNewList: (newList: listObject[]) => void;
+  reloadNewList: (newList: list[]) => void;
   setActiveItem: (listID: number) => void;
-  lists: listObject[];
+  removeTaskFromList: (taskItemID: number) => void;
+  updateListName: (listID: number, newName: string) => void;
+  lists: list[];
 };
 
-export type currentListState = {
-  currentList: taskObject[];
-  setCurrentList: (currentList: taskObject[]) => void;
+export type CurrentListState = {
+  currentList: task[];
+  setCurrentList: (currentList: task[]) => void;
   clearCurrentList: () => void;
   setActiveTask: (taskID: number) => void;
 };
-export type hyperlinkObject = {
+export type note = {
+  title: string;
+  content: string;
+};
+export type hyperLink = {
   title: string;
   hyperlink: string;
 };
-export type infoObject = {
+export type info = {
   date: string;
   dueDate?: string;
-  link?: hyperlinkObject;
+  link?: hyperLink;
+  note?: note;
 };
 
 export type currentTask = {
-  currentTask: taskObject;
+  currentTask: task;
   isHidden: boolean;
-  link?: hyperlinkObject;
+  link?: hyperLink;
+  note?: note;
   dueDate?: string;
-  setCurrentTask: (currentTask: taskObject) => void;
+  setCurrentTask: (currentTask: task) => void;
   setIsHidden: (isHidden: boolean) => void;
-  setNewLink: (link: hyperlinkObject) => void;
+  setNewLink: (link: hyperLink) => void;
   setDueDate: (dueDate: string) => void;
+  setNewNote: (note: note) => void;
 };
-export type taskObject = {
+export type task = {
   taskID: number;
   taskName: string;
-  info: infoObject;
+  info: info;
   status: number;
   isActive: boolean;
 };
@@ -45,20 +54,19 @@ export type currentListID = {
   setCurrentListID: (currentListID: number) => void;
 };
 
-export type listObject = {
+export type list = {
   listName: string;
   listID: number;
-  completedTasks: taskObject[];
-  pendingTasks: taskObject[];
+  tasks: task[];
   isActive: boolean;
 };
-export type userObject = {
+export type user = {
   username: string;
   first: string;
   last: string;
   mail: string;
 };
-export type userState = {
-  profile: userObject;
-  setUser: (profile: userObject) => void;
+export type UserState = {
+  profile: user;
+  setUserProfile: (userProfile: user) => void;
 };

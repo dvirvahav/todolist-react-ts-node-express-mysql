@@ -14,16 +14,19 @@ export const useGeneralLogic = () => {
     clearList,
     reloadNewList,
     setActiveItem,
+    removeTaskFromList,
+    updateListName,
   } = useListContext();
 
   const { setCurrentListID, currentListID } = useCurrentListIDContext();
-  const { profile, setUser } = useUserContext();
+  const { profile, setUserProfile: setUser } = useUserContext();
   const {
     currentTask,
     setCurrentTask,
     isHidden,
     setIsHidden,
     setNewLink,
+    setNewNote,
     setDueDate,
   } = useCurrentTaskContext();
 
@@ -33,7 +36,9 @@ export const useGeneralLogic = () => {
     isHidden,
     setIsHidden,
     setNewLink,
+    updateListName,
     setDueDate,
+    removeTaskFromList,
     setCurrentList,
     lists,
     addNewList,
@@ -48,5 +53,6 @@ export const useGeneralLogic = () => {
     reloadNewList,
     setActiveItem,
     currentListID,
+    setNewNote,
   };
 };

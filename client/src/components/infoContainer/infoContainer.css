@@ -1,9 +1,0 @@
-.infoContainer {
-  border-radius: 10px;
-  display: grid;
-  grid-template-rows: auto;
-}
-
-.empty-container {
-  display: none;
-}

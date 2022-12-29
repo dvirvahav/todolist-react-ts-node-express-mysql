@@ -8,6 +8,7 @@ import { ListContextProvider } from '../../context/list';
 import { CurrentListContextProvider } from '../../context/currentList';
 import { CurrentListIDContextProvider } from '../../context/currentListID';
 import { UserContextProvider } from '../../context/user';
+import { Provider } from 'react-redux';
 
 export const App: FC = () => {
   return (

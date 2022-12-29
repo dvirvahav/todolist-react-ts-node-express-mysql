@@ -1,9 +1,9 @@
 import Axios from 'axios';
 import { FC, useState } from 'react';
-
+import { FcDatabase } from 'react-icons/fc';
 import { taskTemp } from '../../context/currentTask';
 
-import { taskObject } from '../../types/types';
+import { task } from '../../types/types';
 import { useGeneralLogic } from '../allContexts';
 
 export const ListItem: FC<{
@@ -12,14 +12,13 @@ export const ListItem: FC<{
   isActive: boolean;
 }> = ({ itemInput, itemID, isActive }) => {
   const {
-    profile,
     lists,
     removeItem,
     setIsHidden,
     setCurrentTask,
     setActiveItem,
     setCurrentList,
-    currentListID,
+    updateListName,
     setCurrentListID,
   } = useGeneralLogic();
 
@@ -32,14 +31,10 @@ export const ListItem: FC<{
     setCurrentListID(itemID);
     setCurrentTask(taskTemp);
     lists.forEach(
-      (item: {
-        listID: number;
-        pendingTasks: taskObject[];
-        isActive: boolean;
-      }) => {
+      (item: { listID: number; tasks: task[]; isActive: boolean }) => {
         if (item.listID === itemID) {
           setActiveItem(item.listID);
-          setCurrentList(item.pendingTasks);
+          setCurrentList(item.tasks);
         }
       }
     );
@@ -82,11 +77,7 @@ export const ListItem: FC<{
         if (response.data === 'Error') {
           alert('Something went wrong, list not saved in db');
         } else {
-          lists.forEach((item) => {
-            if (item.listID === currentListID) {
-              item.listName = input;
-            }
-          });
+          updateListName(itemID, input);
         }
       })
       .catch((error) => {
@@ -96,9 +87,13 @@ export const ListItem: FC<{
 
   return (
     <li
-      className={isActive ? 'activeList itemList' : 'itemList'}
+      className={isActive ? 'activeList itemList loading' : 'itemList loading'}
       id={'list' + itemID}
       onClick={handleSetList}>
+      <div className='list-icon'>
+        <FcDatabase size='20px' />
+      </div>
+
       <input
         type='text'
         value={input}
@@ -107,9 +102,16 @@ export const ListItem: FC<{
         onChange={(event) => setInput(event.target.value)}
       />
 
-      <div className='buttonsGrid'>
-        <button onClick={handleSave}>{buttonInput}</button>
-        <button onClick={handleRemove}>R</button>
+      <div className='dropdown'>
+        <button onClick={handleRemove} className='remove'>
+          <i className='fa fa-trash'></i>
+        </button>
+        <button onClick={handleSave} className='edit'>
+          <i
+            className={
+              buttonInput === 'Edit' ? 'fa fa-edit' : 'fa fa-save'
+            }></i>
+        </button>
       </div>
     </li>
   );

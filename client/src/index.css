@@ -1,19 +1,31 @@
-@import url('./components/infoContainer/infoContainer.css');
-@import url('./components/taskContainer/taskContainer.css');
-@import url('./components/listContainer/listContainer.css');
+@import url('./components/infoContainer/css/infoContainer.css');
+@import url('./components/taskContainer/css/taskContainer.css');
+@import url('./components/listContainer/css/listContainer.css');
 @import url('./components/infoContainer/dataComponents/hyperLink/hyperlink.css');
+@import url('./components/infoContainer/dataComponents//note/note.css');
 @import url('./pages/login/login.css');
+@import url('.//components/dashboard/css/dashboard.css');
 * {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+
   color: inherit;
   font-weight: inherit;
   letter-spacing: -0.2px;
 }
+
+html,
 body {
-  background-color: #f4f2f2;
-  margin: 0;
+  background-color: rgb(248, 249, 250);
+
   padding: 0;
+  margin: 0;
   color: rgba(92, 89, 89, 0.864);
+}
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
 }
 /* width */
 ::-webkit-scrollbar {
@@ -32,34 +44,15 @@ body {
 }
 .categoryList,
 .taskInfo {
-  height: 400px;
+  height: 800px;
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 0;
   list-style: none;
 }
 
-.item {
-  box-shadow: -2px 1px 1px 1px rgba(232, 232, 239, 0.951);
-  cursor: pointer;
-  height: 30px;
-  font-size: 13px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  position: relative;
-  margin-bottom: 5px;
-  border-radius: 5px;
-}
-
-.item:hover {
-  font-weight: 700;
-}
-
-.activeList,
-.activeTask {
-  font-weight: 700;
-}
 input {
+  position: absolute;
   border: none;
   background: none;
   padding: 5px;
@@ -79,10 +72,6 @@ input:focus {
   color: inherit;
 }
 
-.formAdd {
-  font-size: 13px;
-  height: 30px;
-}
 button {
   background-color: inherit;
   border: none;
@@ -92,4 +81,30 @@ button:hover {
   background-color: #bacee2c4;
   color: white;
   cursor: pointer;
+}
+@keyframes loading {
+  0% {
+    transform: translateY(-5px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.loading-slow {
+  animation: loading 1s ease-in-out;
+}
+
+.loading-medium {
+  animation: loading 0.5s ease-in-out;
+}
+
+.loading-fast {
+  animation: loading 0.1s ease-in-out;
+}
+
+.loading-normal {
+  animation: loading 0.2s ease-in-out;
 }

@@ -34,7 +34,7 @@ export const Hyperlink: FC = () => {
 
   return (
     <div>
-      <li className='taskItem item'>
+      <li className='infoItem'>
         {currentTask.info.link === undefined ? (
           <button
             onClick={() => {

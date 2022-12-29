@@ -4,7 +4,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { useCurrentListIDContext } from '../../context/currentListID';
 import { useCurrentListContext } from '../../context/currentList';
 import { useListContext } from '../../context/list';
-import { infoObject, taskObject } from '../../types/types';
+import { info, task } from '../../types/types';
 
 export const useTaskLogic = () => {
   const { currentList, setCurrentList } = useCurrentListContext();
@@ -29,28 +29,24 @@ export const useTaskLogic = () => {
         if (response.data === 'Error') {
           alert('Something went wrong, list not saved in db');
         } else {
-          let newTask: taskObject = {} as taskObject;
-          lists.forEach(
-            (item: { listID: number; pendingTasks: taskObject[] }) => {
-              if (item.listID === currentListID) {
-                newTask = initiateNewTask(
-                  response.data[0]['id'],
-                  input,
-                  new Date().toLocaleString()
-                );
-                item.pendingTasks.push(newTask);
-              }
+          let newTask: task = {} as task;
+          lists.forEach((item: { listID: number; tasks: task[] }) => {
+            if (item.listID === currentListID) {
+              newTask = initiateNewTask(
+                response.data[0]['id'],
+                input,
+                new Date().toLocaleString()
+              );
+              item.tasks.push(newTask);
             }
-          );
+          });
 
           // Set the list as current list
-          lists.forEach(
-            (item: { listID: number; pendingTasks: taskObject[] }) => {
-              if (item.listID === currentListID) {
-                setCurrentList(item.pendingTasks.slice());
-              }
+          lists.forEach((item: { listID: number; tasks: task[] }) => {
+            if (item.listID === currentListID) {
+              setCurrentList(item.tasks.slice());
             }
-          );
+          });
         }
       })
       .catch((error) => {
@@ -66,13 +62,13 @@ export const useTaskLogic = () => {
     input: string,
     date: string,
     dueDate?: string
-  ): taskObject {
-    const newInfoForTask: infoObject = {
+  ): task {
+    const newInfoForTask: info = {
       date: date,
       dueDate: dueDate,
     };
 
-    const newTaskItem: taskObject = {
+    const newTaskItem: task = {
       taskID: id,
       taskName: input,
       info: newInfoForTask,

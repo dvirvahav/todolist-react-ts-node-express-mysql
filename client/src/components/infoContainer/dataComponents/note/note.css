@@ -1,0 +1,26 @@
+.popup_note {
+  position: absolute;
+  grid-template-rows: auto;
+  display: grid;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  background: #a9e0be;
+  border-radius: 2px;
+  padding: 14px 28px;
+  border-radius: 3px;
+  max-width: 600px;
+  min-width: 300px;
+  box-shadow: 0px 0px 5px 2px #3ccd76;
+}
+.item_note {
+  box-shadow: -2px 1px 1px 1px rgba(232, 232, 239, 0.951);
+  cursor: pointer;
+  font-size: 13px;
+  overflow: scroll;
+  text-overflow: ellipsis;
+  white-space: initial;
+  padding: 5px;
+  border-radius: 5px;
+}

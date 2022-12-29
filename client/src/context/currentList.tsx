@@ -5,11 +5,11 @@ import {
   useState,
   Context,
 } from 'react';
-import { currentListState, taskObject } from '../types/types';
+import { CurrentListState, task } from '../types/types';
 
 export const useCurrentListContext = () => useContext(CurrentListContext);
-export const CurrentListContext: Context<currentListState> =
-  createContext<currentListState>({
+export const CurrentListContext: Context<CurrentListState> =
+  createContext<CurrentListState>({
     currentList: [],
     clearCurrentList: () => {},
     setCurrentList: () => {},
@@ -21,12 +21,12 @@ export function CurrentListContextProvider({
 }: {
   children: JSX.Element;
 }) {
-  const [currentList, setCurrentList] = useState<taskObject[]>([]);
+  const [currentList, setCurrentList] = useState<task[]>([]);
   const clearCurrentList = useCallback(() => setCurrentList([]), []);
   const setActiveTask = useCallback(
     (itemID: number) =>
       setCurrentList(
-        currentList.map((item: taskObject) => {
+        currentList.map((item: task) => {
           if (item.taskID === itemID) {
             item.isActive = !item.isActive;
           } else item.isActive = false;

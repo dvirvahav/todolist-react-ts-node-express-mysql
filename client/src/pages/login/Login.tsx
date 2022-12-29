@@ -2,8 +2,8 @@ import { ChangeEvent, FC, useState } from 'react';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import Axios, { AxiosResponse } from 'axios';
 import { useUserContext } from '../../context/user';
-import { listObject, userObject } from '../../types/types';
-
+import { list, user } from '../../types/types';
+import { IoIosLogIn } from 'react-icons/io';
 import { useListContext } from '../../context/list';
 import { useCurrentListContext } from '../../context/currentList';
 import { alerts } from '../../utils/enums';
@@ -13,7 +13,7 @@ import { useTaskLogic } from '../../components/taskContainer/logic';
 export const Login: FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const { setUser } = useUserContext();
+  const { setUserProfile: setUser } = useUserContext();
   const { reloadNewList, clearList } = useListContext();
   const { clearCurrentList } = useCurrentListContext();
   const { initiateNewList } = useListLogic();
@@ -75,7 +75,7 @@ export const Login: FC = () => {
   };
 
   const updateUserDetails = (response: AxiosResponse) => {
-    const user: userObject = {} as userObject;
+    const user: user = {} as user;
     user.username = response.data[0]['username'];
     user.first = response.data[0]['first'];
     user.last = response.data[0]['last'];
@@ -84,12 +84,12 @@ export const Login: FC = () => {
   };
 
   const loadData = (response: AxiosResponse) => {
-    const userLists: listObject[] = [];
+    const userLists: list[] = [];
     var i,
       j = 0;
     for (i = 0; i < response.data[0].length; i++) {
       let currentListID = response.data[0][i]['id'];
-      let newList: listObject = initiateNewList(
+      let newList: list = initiateNewList(
         currentListID,
         response.data[0][i]['name']
       );
@@ -105,9 +105,8 @@ export const Login: FC = () => {
               : response.data[1][j]['dueDate']
           );
 
-          if (response.data[1][j]['status'])
-            userLists[i].completedTasks.push(newTask);
-          else userLists[i].pendingTasks.push(newTask);
+          if (response.data[1][j]['status']) userLists[i].tasks.push(newTask);
+          else userLists[i].tasks.push(newTask);
         }
       }
     }
@@ -115,12 +114,22 @@ export const Login: FC = () => {
   };
 
   return (
-    <div className='Login-body'>
-      <div className='Login'>
-        <h1>Log in to Your Account</h1>
-        <form method='post' onSubmit={handleSubmit}>
+    <div className='login-body grid-container loading-normal '>
+      <div className='img-wrapper grid-item'>
+        <img
+          src='https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80'
+          alt=''></img>
+      </div>
+
+      <div className='login-wrapper loading-slow'>
+        <div className='top-login-form'>
+          <IoIosLogIn size='40px' color='#1976d2' />
+          <h1>Log in to Your Account</h1>
+        </div>
+
+        <form id='login-form' method='post' onSubmit={handleSubmit}>
           <input
-            className='Login-input'
+            id='username'
             type='text'
             name='username'
             placeholder='Username'
@@ -128,10 +137,12 @@ export const Login: FC = () => {
             value={username}
             onChange={handleUserChange}
             autoComplete='username'
+            maxLength={40}
           />
-          <br />
+          <br /> <br />
           <input
-            className='Login-input'
+            maxLength={40}
+            id='password'
             type='password'
             name='password'
             placeholder='Password'
@@ -140,19 +151,16 @@ export const Login: FC = () => {
             onChange={handlePassChange}
             autoComplete='current-password'
           />
-          <br />
-          <br />
-          <input type='submit' className='Login-button' value='Login' />
-
-          <br />
-          <br />
-          <br />
-          <p>
-            Need an account?{' '}
-            <a href='/public/Signup.html' onClick={handleSignup}>
-              Sign up
-            </a>
-          </p>
+          <br /> <br />
+          <input id='login-button' type='submit' value='Login' />
+          <div className='grid-item'>
+            <p>
+              Need an account?{' '}
+              <a href='/public/Signup.html' onClick={handleSignup}>
+                Sign up
+              </a>
+            </p>
+          </div>
         </form>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { FC } from 'react';
 
 export const InfoContainer: FC = () => {
   const { currentTask, currentList } = useGeneralLogic();
+
   return currentTask.info.date === '' ? (
     <div className='empty-container'></div>
   ) : (

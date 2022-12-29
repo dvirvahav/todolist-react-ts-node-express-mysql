@@ -1,46 +1,27 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useTaskLogic } from './logic';
+import { TaskForm } from './taskForm';
 import { TaskItem } from './taskItem';
 
 export const TaskContainer: FC = () => {
-  const { lists, currentListID, currentList, submit, handleChange, input } =
-    useTaskLogic();
+  const { currentList } = useTaskLogic();
 
   return (
-    <div className='taskContainer'>
-      <div>
-        {lists.map((item) => (
-          <div key={item.listID} className='headline'>
-            {item.listID === currentListID ? item.listName : null}
-          </div>
-        ))}
-      </div>
+    <div>
       <br />
-      <div className='allLists'>
-        <ul className='pendingTaskList'>
-          {currentList.map((item, idx) => (
-            <TaskItem
-              key={`${item.taskID}-${idx}`}
-              itemInput={item.taskName}
-              itemID={item.taskID}
-              itemStatus={item.status}
-              isActive={item.isActive}
-            />
-          ))}
-        </ul>
-      </div>
-      <form className='formAdd' onSubmit={submit}>
-        <button>+</button>
-        <input
-          className='taskInput'
-          type='text'
-          placeholder='Add a task'
-          maxLength={90}
-          value={input} // in order to clear it with setInputValue
-          onChange={handleChange} // updating InputValue
-          required
-        />
-      </form>
+      <ul className='tasksList loading-normal '>
+        {currentList.map((item) => (
+          <TaskItem
+            key={item.taskID}
+            itemInput={item.taskName}
+            itemID={item.taskID}
+            itemStatus={item.status}
+            isActive={item.isActive}
+          />
+        ))}
+      </ul>
+
+      <TaskForm />
     </div>
   );
 };

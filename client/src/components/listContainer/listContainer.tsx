@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { ListItem } from './listItem';
+import { FcAddDatabase } from 'react-icons/fc';
 
 import { useListLogic } from './logic';
 
@@ -7,11 +8,11 @@ export const ListContainer: FC = () => {
   const { handleChange, handleSubmit, lists, input } = useListLogic();
 
   return (
-    <div className='listContainer'>
-      <ul className='pendingTaskList'>
-        {lists.map((item, idx) => (
+    <div className='listContainer loading'>
+      <ul className='listLists'>
+        {lists.map((item) => (
           <ListItem
-            key={`${item.listID}-${idx}`}
+            key={item.listID}
             itemInput={item.listName}
             itemID={item.listID}
             isActive={item.isActive}
@@ -19,11 +20,14 @@ export const ListContainer: FC = () => {
         ))}
       </ul>
       <form className='formAddList ' onSubmit={handleSubmit}>
-        <button>+</button>
+        <button>
+          <FcAddDatabase size='20px' />
+        </button>
+
         <input
           className='inputList'
           type='text'
-          placeholder='New list'
+          placeholder='New List'
           maxLength={20}
           value={input}
           onChange={handleChange}
